@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="layout_editor",
-    version="1.0-linux",
+    version="1.0",
     include_package_data=True,
     packages=find_packages(),
     description="A layout editor package",
