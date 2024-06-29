@@ -27,6 +27,9 @@ jobs:
           docker cp layout_editor_container:/usr/src/app/dist linux/dist
           docker rm layout_editor_container
 
+      - name: List Linux dist directory
+        run: ls -la linux/dist
+
       - name: Upload Linux artifact
         uses: actions/upload-artifact@v2
         with:
@@ -71,11 +74,17 @@ jobs:
           name: linux-dist
           path: linux/dist
 
+      - name: List downloaded Linux dist directory
+        run: ls -la linux/dist
+
       - name: Download Windows build artifact
         uses: actions/download-artifact@v2
         with:
           name: windows-dist
           path: windows/dist
+
+      - name: List downloaded Windows dist directory
+        run: ls -la windows/dist
 
       - name: Create a new tag
         id: create_tag
