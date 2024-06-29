@@ -19,7 +19,7 @@ jobs:
       - name: Extract version from setup.py
         id: extract_version_linux
         run: |
-          VERSION=$(python -c "exec(open('setup.py').read()); print(__version__)")
+          VERSION=$(python -c "exec(open('linux/setup.py').read()); print(__version__)")
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build Docker image
@@ -63,7 +63,7 @@ jobs:
         id: extract_version_windows
         shell: pwsh
         run: |
-          $content = Get-Content setup.py -Raw
+          $content = Get-Content windows/setup.py -Raw
           $content = $content -replace "`r`n", "`n"
           $matches = [regex]::Match($content, "__version__\s*=\s*'([^']+)'")
           $version = $matches.Groups[1].Value
