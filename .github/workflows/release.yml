@@ -20,12 +20,16 @@ jobs:
         run: |
           cd linux
           docker build -t layout_editor_linux -f Dockerfile .
+          cd ..
 
       - name: Run Docker container
         run: |
           docker run --name layout_editor_container layout_editor_linux
           docker cp layout_editor_container:/usr/src/app/dist linux/dist
           docker rm layout_editor_container
+
+      - name: List Linux dist directory
+        run: ls -la linux/dist
 
       - name: Create a new tag
         id: create_tag_linux
@@ -74,9 +78,10 @@ jobs:
 
       - name: Create a new tag
         id: create_tag_windows
+        shell: pwsh
         run: |
-          TAG_NAME="v1.0-windows-$(date +%s)"
-          echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
+          $TAG_NAME="v1.0-windows-$(Get-Date -UFormat %s)"
+          echo "TAG_NAME=$TAG_NAME" >> $env:GITHUB_ENV
 
       - name: Create GitHub Release for Windows
         id: create_release_windows
