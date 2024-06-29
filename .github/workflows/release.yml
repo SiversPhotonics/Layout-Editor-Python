@@ -16,6 +16,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Extract version from setup.py
+        id: extract_version_linux
+        run: |
+          VERSION=$(python -c "exec(open('setup.py').read()); print(__version__)")
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
       - name: Build Docker image
         run: |
           cd linux
@@ -28,25 +34,15 @@ jobs:
           docker cp layout_editor_container:/usr/src/app/dist linux/dist
           docker rm layout_editor_container
 
-      - name: List Linux dist directory
-        run: ls -la linux/dist
-
-      - name: Create a new tag
-        id: create_tag_linux
-        run: |
-          TAG_NAME="v1.0-linux-$(date +%s)"
-          echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
-
       - name: Create GitHub Release for Linux
         id: create_release_linux
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.TAG_NAME }}
-          name: Release ${{ env.TAG_NAME }}
+          tag_name: "v${{ env.VERSION }}-linux"
+          name: Release v${{ env.VERSION }} for Linux
           body: |
             Release for commit ${{ github.sha }} (Linux).
           files: |
-            linux/dist/*.tar.gz
             linux/dist/*.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -63,29 +59,31 @@ jobs:
         with:
           python-version: '3.7'
 
+      - name: Extract version from setup.py
+        id: extract_version_windows
+        shell: pwsh
+        run: |
+          $content = Get-Content setup.py -Raw
+          $content = $content -replace "`r`n", "`n"
+          $matches = [regex]::Match($content, "__version__\s*=\s*'([^']+)'")
+          $version = $matches.Groups[1].Value
+          echo "VERSION=$version" >> $env:GITHUB_ENV
+
       - name: Install dependencies
         run: |
           pip install wheel
           cd windows
           python setup.py sdist bdist_wheel
 
-      - name: Create a new tag
-        id: create_tag_windows
-        shell: pwsh
-        run: |
-          $TAG_NAME="v1.0-windows-$(Get-Date -UFormat %s)"
-          echo "TAG_NAME=$TAG_NAME" >> $env:GITHUB_ENV
-
       - name: Create GitHub Release for Windows
         id: create_release_windows
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.TAG_NAME }}
-          name: Release ${{ env.TAG_NAME }}
+          tag_name: "v${{ env.VERSION }}-windows"
+          name: Release v${{ env.VERSION }} for Windows
           body: |
             Release for commit ${{ github.sha }} (Windows).
           files: |
-            windows/dist/*.tar.gz
             windows/dist/*.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
