@@ -17,26 +17,25 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build Docker image
-        run: docker build -t layout_editor_linux:latest -f linux/Dockerfile .
+        run: |
+          cd linux
+          docker build -t layout_editor_linux -f Dockerfile .
 
       - name: Run Docker container
         run: |
-          docker run --name layout_editor_container layout_editor_linux:latest
+          docker run --name layout_editor_container layout_editor_linux
           docker cp layout_editor_container:/usr/src/app/dist linux/dist
           docker rm layout_editor_container
-
-      - name: Create tar.gz of Linux build artifact
-        run: tar -czf linux-dist.tar.gz -C dist .
 
       - name: Upload Linux artifact
         uses: actions/upload-artifact@v2
         with:
           name: linux-dist
-          path: linux-dist.tar.gz
+          path: linux/dist/*.tar.gz
 
   build-windows:
     name: Build on Windows
-    runs-on: self-hosted
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -44,33 +43,23 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.7.12'
-
-      - name: Install dependencies
-        run: |
-          cd windows
-          pip install -r requirements.txt
+          python-version: '3.7'
 
       - name: Build distribution
         run: |
           cd windows
           python setup.py sdist bdist_wheel
 
-      - name: Create release asset
-        run: |
-          cd windows/dist
-          tar -czf windows-dist.tar.gz *
-
       - name: Upload release asset
         uses: actions/upload-artifact@v2
         with:
           name: windows-dist
-          path: windows/dist/windows-dist.tar.gz
+          path: windows/dist/*.tar.gz
 
   create-release:
     name: Create GitHub Release
     needs: [build-linux, build-windows]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -79,13 +68,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: linux-dist
-          path: ./dist/linux
+          path: linux/dist
 
       - name: Download Windows build artifact
         uses: actions/download-artifact@v2
         with:
           name: windows-dist
-          path: ./dist/windows
+          path: windows/dist
 
       - name: Create GitHub Release
         id: create_release
@@ -104,7 +93,7 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/linux/linux-dist.tar.gz
+          asset_path: linux/dist/*.tar.gz
           asset_name: linux-dist.tar.gz
           asset_content_type: application/gzip
 
@@ -112,6 +101,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/windows/windows-dist.tar.gz
+          asset_path: windows/dist/*.tar.gz
           asset_name: windows-dist.tar.gz
           asset_content_type: application/gzip
