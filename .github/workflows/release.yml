@@ -45,8 +45,9 @@ jobs:
         with:
           python-version: '3.7'
 
-      - name: Build distribution
+      - name: Install dependencies
         run: |
+          pip install wheel
           cd windows
           python setup.py sdist bdist_wheel
 
