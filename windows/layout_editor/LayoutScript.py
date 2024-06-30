@@ -6,7 +6,7 @@
 from __future__ import annotations
 
 from sys import version_info as _swig_python_version_info
-from typing import Union, overload
+from typing import Any, List, Union, overload, Tuple
 
 if _swig_python_version_info < (2, 7, 0):
     raise RuntimeError("Python 2.7 or later required")
@@ -15,7 +15,7 @@ if _swig_python_version_info < (2, 7, 0):
 import layout_editor._LayoutScript as _LayoutScript  # type: ignore
 
 
-def _swig_repr(self):
+def _swig_repr(self: object):
     try:
         strthis = "proxy of " + self.this.__repr__()
     except Exception:
@@ -465,520 +465,635 @@ class cell(object):
 
     __repr__ = _swig_repr
 
-    def addBox(self, *args):
+    @overload
+    def addBox(self, x: int, y: int, w: int, h: int, layer: int) -> element: ...
+
+    @overload
+    def addBox(self, array: pointArray, layer: int) -> element: ...
+
+    @overload
+    def addBox(self, r: rect, layer: int) -> element: ...
+
+    def addBox(self, *args: Any) -> element:
         return _LayoutScript.cell_addBox(self, *args)
 
-    def addCellref(self, c, pos):
+    def addCellref(self, c: cell, pos: point) -> element:
         return _LayoutScript.cell_addCellref(self, c, pos)
 
-    def addCellrefArray(self, *args):
+    @overload
+    def addCellrefArray(
+        self, c: cell, array: pointArray, nx: int, ny: int
+    ) -> element: ...
+
+    @overload
+    def addCellrefArray(
+        self, c: cell, p1: point, p2: point, nx: int, ny: int
+    ) -> element: ...
+
+    def addCellrefArray(self, *args: Any) -> element:
         return _LayoutScript.cell_addCellrefArray(self, *args)
 
-    def addChamferedBox(self, x, y, b, h, chamfer, layer):
+    def addChamferedBox(
+        self, x: int, y: int, b: int, h: int, chamfer: int, layer: int
+    ) -> element:
         return _LayoutScript.cell_addChamferedBox(self, x, y, b, h, chamfer, layer)
 
-    def addCircle(self, *args):
+    @overload
+    def addCircle(
+        self, layer: int, center: point, radius: int, numPoints: int
+    ) -> element: ...
+
+    @overload
+    def addCircle(
+        self, layer: int, center: point, circlePoint: point, numPoints: int
+    ) -> element: ...
+
+    def addCircle(self, *args: Any) -> element:
         return _LayoutScript.cell_addCircle(self, *args)
 
-    def addCircleBox(self, p1, p2, layer):
+    def addCircleBox(self, p1: point, p2: point, layer: int) -> element:
         return _LayoutScript.cell_addCircleBox(self, p1, p2, layer)
 
-    def addEllipse(self, layer, center, rx, ry):
+    def addEllipse(self, layer: int, center: point, rx: int, ry: int) -> element:
         return _LayoutScript.cell_addEllipse(self, layer, center, rx, ry)
 
-    def addPath(self, *args):
+    @overload
+    def addPath(self, points: pointArray, layer: int) -> element: ...
+
+    @overload
+    def addPath(self, points: pointArray, layer: int, width: int) -> element: ...
+
+    def addPath(self, *args: Any) -> element:
         return _LayoutScript.cell_addPath(self, *args)
 
-    def addPolygon(self, points, layer):
+    def addPolygon(self, points: pointArray, layer: int) -> element:
         return _LayoutScript.cell_addPolygon(self, points, layer)
 
     def addPolygonArc(
-        self, center, radiusInner, radiusOuter, angleStart, angleStop, layer
-    ):
+        self,
+        center: point,
+        radiusInner: int,
+        radiusOuter: int,
+        angleStart: float,
+        angleStop: float,
+        layer: int,
+    ) -> element:
         return _LayoutScript.cell_addPolygonArc(
             self, center, radiusInner, radiusOuter, angleStart, angleStop, layer
         )
 
-    def addRoundedBox(self, x, y, b, h, radius, layer):
+    def addRoundedBox(
+        self, x: int, y: int, b: int, h: int, radius: int, layer: int
+    ) -> element:
         return _LayoutScript.cell_addRoundedBox(self, x, y, b, h, radius, layer)
 
-    def addSector(self, center, radius, angleStart, angleStop, layer):
+    def addSector(
+        self,
+        center: point,
+        radius: int,
+        angleStart: float,
+        angleStop: float,
+        layer: int,
+    ) -> element:
         return _LayoutScript.cell_addSector(
             self, center, radius, angleStart, angleStop, layer
         )
 
-    def addText(self, layer, pos, text):
+    def addText(self, layer: int, pos: point, text: str) -> element:
         return _LayoutScript.cell_addText(self, layer, pos, text)
 
-    def addCornerAreaSelect(self, value1, value2, angleInt):
+    def addCornerAreaSelect(self, value1: float, value2: float, angleInt: int) -> None:
         return _LayoutScript.cell_addCornerAreaSelect(self, value1, value2, angleInt)
 
-    def areaLayer(self, layer):
+    def areaLayer(self, layer: int) -> float:
         return _LayoutScript.cell_areaLayer(self, layer)
 
-    def areaSelect(self):
+    def areaSelect(self) -> float:
         return _LayoutScript.cell_areaSelect(self)
 
-    def areaSelected(self):
+    def areaSelected(self) -> float:
         return _LayoutScript.cell_areaSelected(self)
 
-    def bowImprovementSelect(self, detectAngle, pointFactor, minLength):
+    def bowImprovementSelect(
+        self, detectAngle: float, pointFactor: float, minLength: int
+    ) -> None:
         return _LayoutScript.cell_bowImprovementSelect(
             self, detectAngle, pointFactor, minLength
         )
 
-    def boxDeselect(self):
+    def boxDeselect(self) -> None:
         return _LayoutScript.cell_boxDeselect(self)
 
-    def boxSelectVisible(self):
+    def boxSelectVisible(self) -> None:
         return _LayoutScript.cell_boxSelectVisible(self)
 
-    def cDeselect(self, select):
+    def cDeselect(self, select: rect) -> None:
         return _LayoutScript.cell_cDeselect(self, select)
 
-    cellName = property(
+    cellName: str = property(
         _LayoutScript.cell_cellName_get, _LayoutScript.cell_cellName_set
     )
 
-    def chamferSelect(self, value, type, angleInt):
+    def chamferSelect(self, value: float, type: int, angleInt: int) -> None:
         return _LayoutScript.cell_chamferSelect(self, value, type, angleInt)
 
-    def circumferenceSelect(self):
+    def circumferenceSelect(self) -> float:
         return _LayoutScript.cell_circumferenceSelect(self)
 
-    def circumferenceSelected(self):
+    def circumferenceSelected(self) -> float:
         return _LayoutScript.cell_circumferenceSelected(self)
 
-    def clearProperties(self):
+    def clearProperties(self) -> None:
         return _LayoutScript.cell_clearProperties(self)
 
-    def closeToPolygon(self):
+    def closeToPolygon(self) -> None:
         return _LayoutScript.cell_closeToPolygon(self)
 
-    def closeToPolygonSelect(self):
+    def closeToPolygonSelect(self) -> None:
         return _LayoutScript.cell_closeToPolygonSelect(self)
 
-    def compare(self, Cell):
+    def compare(self, Cell: cell) -> None:
         return _LayoutScript.cell_compare(self, Cell)
 
-    def convertToPolygonIfClosed(self):
+    def convertToPolygonIfClosed(self) -> None:
         return _LayoutScript.cell_convertToPolygonIfClosed(self)
 
-    def convertToPolygonIfClosedSelect(self):
+    def convertToPolygonIfClosedSelect(self) -> None:
         return _LayoutScript.cell_convertToPolygonIfClosedSelect(self)
 
-    def countSelectAllPoints(self):
+    def countSelectAllPoints(self) -> int:
         return _LayoutScript.cell_countSelectAllPoints(self)
 
-    def countSelectPoints(self):
+    def countSelectPoints(self) -> int:
         return _LayoutScript.cell_countSelectPoints(self)
 
-    def countSelectPath(self):
+    def countSelectPath(self) -> int:
         return _LayoutScript.cell_countSelectPath(self)
 
-    def countSelectBox(self):
+    def countSelectBox(self) -> int:
         return _LayoutScript.cell_countSelectBox(self)
 
-    def countSelectPolygon(self):
+    def countSelectPolygon(self) -> int:
         return _LayoutScript.cell_countSelectPolygon(self)
 
-    def countSelectCellref(self):
+    def countSelectCellref(self) -> int:
         return _LayoutScript.cell_countSelectCellref(self)
 
-    def countSelectCellrefarray(self):
+    def countSelectCellrefarray(self) -> int:
         return _LayoutScript.cell_countSelectCellrefarray(self)
 
-    def countSelectText(self):
+    def countSelectText(self) -> int:
         return _LayoutScript.cell_countSelectText(self)
 
-    def countSelectCircles(self):
+    def countSelectCircles(self) -> int:
         return _LayoutScript.cell_countSelectCircles(self)
 
-    def countSelectElements(self):
+    def countSelectElements(self) -> int:
         return _LayoutScript.cell_countSelectElements(self)
 
-    def countSelectShapes(self):
+    def countSelectShapes(self) -> int:
         return _LayoutScript.cell_countSelectShapes(self)
 
-    def copyCell(self, arg2):
-        return _LayoutScript.cell_copyCell(self, arg2)
+    def copyCell(self, otherCell: cell) -> None:
+        return _LayoutScript.cell_copyCell(self, otherCell)
 
-    def copySelect(self, *args):
+    def copySelect(self, *args: Any) -> None:
         return _LayoutScript.cell_copySelect(self, *args)
 
-    def cropWithSelection(self):
+    def cropWithSelection(self) -> None:
         return _LayoutScript.cell_cropWithSelection(self)
 
-    def cropSharpAnglesSelect(self, i):
+    def cropSharpAnglesSelect(self, i: int) -> None:
         return _LayoutScript.cell_cropSharpAnglesSelect(self, i)
 
-    def cSelect(self, select):
+    def cSelect(self, select: rect) -> None:
         return _LayoutScript.cell_cSelect(self, select)
 
-    def cutSelect(self, p1, p2):
+    def cutSelect(self, p1: point, p2: point) -> None:
         return _LayoutScript.cell_cutSelect(self, p1, p2)
 
-    def deleteElement(self, e):
+    def deleteElement(self, e: element) -> None:
         return _LayoutScript.cell_deleteElement(self, e)
 
-    def deleteLayer(self, layer):
+    def deleteLayer(self, layer: int) -> None:
         return _LayoutScript.cell_deleteLayer(self, layer)
 
-    def deleteRefs(self, c):
+    def deleteRefs(self, c: cell) -> None:
         return _LayoutScript.cell_deleteRefs(self, c)
 
-    def deleteSelect(self):
+    def deleteSelect(self) -> None:
         return _LayoutScript.cell_deleteSelect(self)
 
-    def depend(self, Cell):
+    def depend(self, Cell: cell) -> bool:
         return _LayoutScript.cell_depend(self, Cell)
 
-    def deselectAll(self):
+    def deselectAll(self) -> None:
         return _LayoutScript.cell_deselectAll(self)
 
-    def deselectCellref(self, cellname):
+    def deselectCellref(self, cellname: str) -> None:
         return _LayoutScript.cell_deselectCellref(self, cellname)
 
-    def deselectLabeledShapesOnLayer(self, layerText, label, layerShape=-1):
+    def deselectLabeledShapesOnLayer(
+        self, layerText: int, label: str, layerShape: int = -1
+    ) -> None:
         return _LayoutScript.cell_deselectLabeledShapesOnLayer(
             self, layerText, label, layerShape
         )
 
-    def deselectLayer(self, layer):
+    def deselectLayer(self, layer: int) -> None:
         return _LayoutScript.cell_deselectLayer(self, layer)
 
-    def deselectNode(self, node):
+    def deselectNode(self, node: int) -> None:
         return _LayoutScript.cell_deselectNode(self, node)
 
-    def deselectNodeOnLayer(self, node, layer):
+    def deselectNodeOnLayer(self, node: int, layer: int) -> None:
         return _LayoutScript.cell_deselectNodeOnLayer(self, node, layer)
 
-    def deselectShapeWithArea(self, min, max):
+    def deselectShapeWithArea(self, min: float, max: float) -> None:
         return _LayoutScript.cell_deselectShapeWithArea(self, min, max)
 
-    def deselectText(self, text, layer=-1):
+    def deselectText(self, text: str, layer: int = -1) -> None:
         return _LayoutScript.cell_deselectText(self, text, layer)
 
-    def edgeRemoveSelect(self, i):
+    def edgeRemoveSelect(self, i: int) -> None:
         return _LayoutScript.cell_edgeRemoveSelect(self, i)
 
-    def fAllDeselect(self, select):
+    def fAllDeselect(self, select: rect) -> None:
         return _LayoutScript.cell_fAllDeselect(self, select)
 
-    def fAllSelect(self, select):
+    def fAllSelect(self, select: rect) -> None:
         return _LayoutScript.cell_fAllSelect(self, select)
 
-    def fDeselect(self, select):
+    def fDeselect(self, select: rect) -> None:
         return _LayoutScript.cell_fDeselect(self, select)
 
-    def fDeselectLayer(self, select, layer):
+    def fDeselectLayer(self, select: rect, layer: int) -> None:
         return _LayoutScript.cell_fDeselectLayer(self, select, layer)
 
-    def filletBezierSelect(self, value, type, angleInt):
+    def filletBezierSelect(self, value: float, type: int, angleInt: int) -> None:
         return _LayoutScript.cell_filletBezierSelect(self, value, type, angleInt)
 
-    def filletRoundSelect(self, value, type, angleInt):
+    def filletRoundSelect(self, value: float, type: int, angleInt: int) -> None:
         return _LayoutScript.cell_filletRoundSelect(self, value, type, angleInt)
 
-    firstElement = property(
+    firstElement: elementList = property(
         _LayoutScript.cell_firstElement_get, _LayoutScript.cell_firstElement_set
     )
 
-    def flatSelect(self):
+    def flatSelect(self) -> None:
         return _LayoutScript.cell_flatSelect(self)
 
-    def flatAllSelect(self):
+    def flatAllSelect(self) -> None:
         return _LayoutScript.cell_flatAllSelect(self)
 
-    def flatCellref(self, e):
+    def flatCellref(self, e: element) -> None:
         return _LayoutScript.cell_flatCellref(self, e)
 
-    def flatCellrefArray(self):
+    def flatCellrefArray(self) -> None:
         return _LayoutScript.cell_flatCellrefArray(self)
 
-    def flatLayer(self, layer):
+    def flatLayer(self, layer: int) -> None:
         return _LayoutScript.cell_flatLayer(self, layer)
 
-    def flatAllLayer(self, layer):
+    def flatAllLayer(self, layer: int) -> None:
         return _LayoutScript.cell_flatAllLayer(self, layer)
 
-    def fSelect(self, select):
+    def fSelect(self, select: rect) -> None:
         return _LayoutScript.cell_fSelect(self, select)
 
-    def fSelectLayer(self, select, layer):
+    def fSelectLayer(self, select: rect, layer: int) -> None:
         return _LayoutScript.cell_fSelectLayer(self, select, layer)
 
-    def fractureNumberPointsSelect(self, count):
+    def fractureNumberPointsSelect(self, count: int) -> None:
         return _LayoutScript.cell_fractureNumberPointsSelect(self, count)
 
-    def fractureTriangleSelect(self, maxSize):
+    def fractureTriangleSelect(self, maxSize: int) -> None:
         return _LayoutScript.cell_fractureTriangleSelect(self, maxSize)
 
-    def fractureBoxSelect(self, maxSize, l=None):
+    def fractureBoxSelect(self, maxSize: int, l: int = None) -> None:
         return _LayoutScript.cell_fractureBoxSelect(self, maxSize, l)
 
-    def fractureTrapezoidSelect(self, maxSize):
+    def fractureTrapezoidSelect(self, maxSize: int) -> None:
         return _LayoutScript.cell_fractureTrapezoidSelect(self, maxSize)
 
     def fractureLineSelect(
-        self, lineSize, overlap=0, keepSmallShapes=False, deletedShapes=None, l=None
-    ):
+        self,
+        lineSize: int,
+        overlap: int = 0,
+        keepSmallShapes: bool = False,
+        deletedShapes: Any = None,
+        l: int = None,
+    ) -> None:
         return _LayoutScript.cell_fractureLineSelect(
             self, lineSize, overlap, keepSmallShapes, deletedShapes, l
         )
 
-    def getDensityLayer(self, *args):
+    @overload
+    def getDensityLayer(self, layer: int, merge: bool) -> float: ...
+
+    @overload
+    def getDensityLayer(
+        self,
+        layer: int,
+        pos: point,
+        sizeX: int,
+        sizeY: int,
+        stepX: int,
+        stepY: int,
+        nx: int,
+        ny: int,
+    ) -> List[float]: ...
+
+    def getDensityLayer(self, *args) -> Union[float, List[float]]:
         return _LayoutScript.cell_getDensityLayer(self, *args)
 
-    def group(self, cell_):
+    def group(self, cell_: cell) -> None:
         return _LayoutScript.cell_group(self, cell_)
 
-    def groupStructure(self, cell_):
+    def groupStructure(self, cell_: cell) -> int:
         return _LayoutScript.cell_groupStructure(self, cell_)
 
-    def identical(self, Cell):
+    def identical(self, Cell: cell) -> bool:
         return _LayoutScript.cell_identical(self, Cell)
 
-    def incircleSelect(self, layer):
+    def incircleSelect(self, layer: int) -> None:
         return _LayoutScript.cell_incircleSelect(self, layer)
 
-    def invertSelect(self):
+    def invertSelect(self) -> None:
         return _LayoutScript.cell_invertSelect(self)
 
-    def mapLayer(self, t):
+    def mapLayer(self, t: "layerTranslator") -> None:
         return _LayoutScript.cell_mapLayer(self, t)
 
-    def maximum(self, *args):
+    @overload
+    def maximum(self, p: point) -> None: ...
+
+    @overload
+    def maximum(self) -> point: ...
+
+    def maximum(self, *args: Any) -> Union[None, point]:
         return _LayoutScript.cell_maximum(self, *args)
 
-    def maximumSelect(self, *args):
+    @overload
+    def maximumSelect(self, p: point) -> None: ...
+
+    @overload
+    def maximumSelect(self) -> point: ...
+
+    def maximumSelect(self, *args: Any) -> Union[None, point]:
         return _LayoutScript.cell_maximumSelect(self, *args)
 
-    def mergeSelect(self):
+    def mergeSelect(self) -> None:
         return _LayoutScript.cell_mergeSelect(self)
 
-    def measureSpaceVisible(self, p1):
+    def measureSpaceVisible(self, p1: point) -> rect:
         return _LayoutScript.cell_measureSpaceVisible(self, p1)
 
-    def minkowskiSumSelect(self, pa):
+    def minkowskiSumSelect(self, pa: pointArray) -> None:
         return _LayoutScript.cell_minkowskiSumSelect(self, pa)
 
-    def minimum(self, *args):
+    @overload
+    def minimum(self, p: point) -> None: ...
+
+    @overload
+    def minimum(self) -> point: ...
+
+    def minimum(self, *args: Any) -> Union[None, point]:
         return _LayoutScript.cell_minimum(self, *args)
 
-    def minimumSelect(self, *args):
+    @overload
+    def minimumSelect(self, p: point) -> None: ...
+
+    @overload
+    def minimumSelect(self) -> point: ...
+
+    def minimumSelect(self, *args: Any) -> Union[None, point]:
         return _LayoutScript.cell_minimumSelect(self, *args)
 
-    def mirrorSelect(self, p1, p2):
+    def mirrorSelect(self, p1: point, p2: point) -> None:
         return _LayoutScript.cell_mirrorSelect(self, p1, p2)
 
-    def modifyCornersSelect(self, value1, value2):
+    def modifyCornersSelect(self, value1: float, value2: float) -> None:
         return _LayoutScript.cell_modifyCornersSelect(self, value1, value2)
 
-    def move(self, pos):
+    def move(self, pos: point) -> None:
         return _LayoutScript.cell_move(self, pos)
 
-    def moveSelect(self, pos):
+    def moveSelect(self, pos: point) -> None:
         return _LayoutScript.cell_moveSelect(self, pos)
 
-    def moveToLayerSelect(self, layer):
+    def moveToLayerSelect(self, layer: int) -> None:
         return _LayoutScript.cell_moveToLayerSelect(self, layer)
 
-    def nearestElement(self, p):
+    def nearestElement(self, p: point) -> "elementList":
         return _LayoutScript.cell_nearestElement(self, p)
 
-    def pathDeselect(self):
+    def pathDeselect(self) -> None:
         return _LayoutScript.cell_pathDeselect(self)
 
-    def pathSelectVisible(self):
+    def pathSelectVisible(self) -> None:
         return _LayoutScript.cell_pathSelectVisible(self)
 
-    def pDeselect(self, select):
+    def pDeselect(self, select: rect) -> None:
         return _LayoutScript.cell_pDeselect(self, select)
 
-    def polygonDeselect(self):
+    def polygonDeselect(self) -> None:
         return _LayoutScript.cell_polygonDeselect(self)
 
-    def polygonSelectVisible(self):
+    def polygonSelectVisible(self) -> None:
         return _LayoutScript.cell_polygonSelectVisible(self)
 
-    def pointOnLayer(self, p, layer):
+    def pointOnLayer(self, p: point, layer: int) -> bool:
         return _LayoutScript.cell_pointOnLayer(self, p, layer)
 
-    def pSelect(self, select):
+    def pSelect(self, select: rect) -> None:
         return _LayoutScript.cell_pSelect(self, select)
 
-    def punchWithSelection(self):
+    def punchWithSelection(self) -> None:
         return _LayoutScript.cell_punchWithSelection(self)
 
-    def relink(self, Cellold, Cellnew):
+    def relink(self, Cellold: cell, Cellnew: cell) -> None:
         return _LayoutScript.cell_relink(self, Cellold, Cellnew)
 
-    def relinkSelect(self, Cellnew):
+    def relinkSelect(self, Cellnew: cell) -> None:
         return _LayoutScript.cell_relinkSelect(self, Cellnew)
 
-    def replaceText(self, text1, text2):
+    def replaceText(self, text1: str, text2: str) -> int:
         return _LayoutScript.cell_replaceText(self, text1, text2)
 
-    def resize(self, scale):
+    def resize(self, scale: float) -> None:
         return _LayoutScript.cell_resize(self, scale)
 
-    def rotateSelect(self, angle, pos):
+    def rotateSelect(self, angle: float, pos: point) -> None:
         return _LayoutScript.cell_rotateSelect(self, angle, pos)
 
-    def roundSelect(self, i):
+    def roundSelect(self, i: int) -> None:
         return _LayoutScript.cell_roundSelect(self, i)
 
-    def scaleSelect(self, *args):
+    def scaleSelect(self, *args: Any) -> None:
         return _LayoutScript.cell_scaleSelect(self, *args)
 
-    def selectAll(self):
+    def selectAll(self) -> None:
         return _LayoutScript.cell_selectAll(self)
 
-    def selectCellref(self, cellname):
+    def selectCellref(self, cellname: str) -> None:
         return _LayoutScript.cell_selectCellref(self, cellname)
 
-    def selectDatatype(self, i):
+    def selectDatatype(self, i: int) -> None:
         return _LayoutScript.cell_selectDatatype(self, i)
 
-    def selectedElement(self, e=None):
+    def selectedElement(self, e: element = None) -> element:
         return _LayoutScript.cell_selectedElement(self, e)
 
-    def selectLabeledShapesOnLayer(self, layerText, label, layerShape=-1):
+    def selectLabeledShapesOnLayer(
+        self, layerText: int, label: str, layerShape: int = -1
+    ) -> None:
         return _LayoutScript.cell_selectLabeledShapesOnLayer(
             self, layerText, label, layerShape
         )
 
-    def selectLayer(self, layer):
+    def selectLayer(self, layer: int) -> None:
         return _LayoutScript.cell_selectLayer(self, layer)
 
-    def selectNode(self, node):
+    def selectNode(self, node: int) -> None:
         return _LayoutScript.cell_selectNode(self, node)
 
-    def selectNodeOnLayer(self, node, layer):
+    def selectNodeOnLayer(self, node: int, layer: int) -> None:
         return _LayoutScript.cell_selectNodeOnLayer(self, node, layer)
 
-    def selectShapeWithArea(self, min, max):
+    def selectShapeWithArea(self, min: float, max: float) -> None:
         return _LayoutScript.cell_selectShapeWithArea(self, min, max)
 
-    def selectText(self, text, layer=-1):
+    def selectText(self, text: str, layer: int = -1) -> None:
         return _LayoutScript.cell_selectText(self, text, layer)
 
-    def selectTouchingOrOverlapping(self, *args):
+    def selectTouchingOrOverlapping(self, *args: Any) -> int:
         return _LayoutScript.cell_selectTouchingOrOverlapping(self, *args)
 
-    def selectArea(self, minArea, maxArea, layerSource):
+    def selectArea(self, minArea: float, maxArea: float, layerSource: int) -> None:
         return _LayoutScript.cell_selectArea(self, minArea, maxArea, layerSource)
 
-    def selectDimension(self, minWidth, maxWidth, minLength, maxLength, layerSource):
+    def selectDimension(
+        self,
+        minWidth: int,
+        maxWidth: int,
+        minLength: int,
+        maxLength: int,
+        layerSource: int,
+    ) -> None:
         return _LayoutScript.cell_selectDimension(
             self, minWidth, maxWidth, minLength, maxLength, layerSource
         )
 
-    def selectRelation(self, layerA, layerB, relation):
+    def selectRelation(self, layerA: int, layerB: int, relation: str) -> None:
         return _LayoutScript.cell_selectRelation(self, layerA, layerB, relation)
 
-    def selectVisible(self):
+    def selectVisible(self) -> None:
         return _LayoutScript.cell_selectVisible(self)
 
-    def selectIdentical(self):
+    def selectIdentical(self) -> None:
         return _LayoutScript.cell_selectIdentical(self)
 
-    def setCapSelect(self, w):
+    def setCapSelect(self, w: int) -> None:
         return _LayoutScript.cell_setCapSelect(self, w)
 
-    def setDatatypeSelect(self, i):
+    def setDatatypeSelect(self, i: int) -> None:
         return _LayoutScript.cell_setDatatypeSelect(self, i)
 
-    def setWidthSelect(self, w):
+    def setWidthSelect(self, w: int) -> None:
         return _LayoutScript.cell_setWidthSelect(self, w)
 
-    def sizeAdjustSelect(self, *args):
+    def sizeAdjustSelect(self, *args: Any) -> None:
         return _LayoutScript.cell_sizeAdjustSelect(self, *args)
 
     def slotSelect(
-        self, slotWidth, minSlotLength, maxSlotLength, edgeSpacing, minSlotspacing
-    ):
+        self,
+        slotWidth: int,
+        minSlotLength: int,
+        maxSlotLength: int,
+        edgeSpacing: int,
+        minSlotspacing: int,
+    ) -> None:
         return _LayoutScript.cell_slotSelect(
             self, slotWidth, minSlotLength, maxSlotLength, edgeSpacing, minSlotspacing
         )
 
-    def snapShapeSelect(self, i):
+    def snapShapeSelect(self, i: int) -> None:
         return _LayoutScript.cell_snapShapeSelect(self, i)
 
-    def snapPathSelect(self, i):
+    def snapPathSelect(self, i: int) -> None:
         return _LayoutScript.cell_snapPathSelect(self, i)
 
-    def stripIdenticalElements(self):
+    def stripIdenticalElements(self) -> None:
         return _LayoutScript.cell_stripIdenticalElements(self)
 
-    def swapLayer(self, i, k):
+    def swapLayer(self, i: int, k: int) -> None:
         return _LayoutScript.cell_swapLayer(self, i, k)
 
-    def swapLayerSelect(self, i, k):
+    def swapLayerSelect(self, i: int, k: int) -> None:
         return _LayoutScript.cell_swapLayerSelect(self, i, k)
 
-    def sortElements(self, type):
+    def sortElements(self, type: str) -> None:
         return _LayoutScript.cell_sortElements(self, type)
 
-    def textDeselect(self):
+    def textDeselect(self) -> None:
         return _LayoutScript.cell_textDeselect(self)
 
-    def textSelectVisible(self):
+    def textSelectVisible(self) -> None:
         return _LayoutScript.cell_textSelectVisible(self)
 
-    def textToPolygon(self, defaultWidth):
+    def textToPolygon(self, defaultWidth: int) -> None:
         return _LayoutScript.cell_textToPolygon(self, defaultWidth)
 
-    def toBox(self):
+    def toBox(self) -> None:
         return _LayoutScript.cell_toBox(self)
 
-    def toBoxSelect(self):
+    def toBoxSelect(self) -> None:
         return _LayoutScript.cell_toBoxSelect(self)
 
-    def toCircleSelect(self):
+    def toCircleSelect(self) -> None:
         return _LayoutScript.cell_toCircleSelect(self)
 
-    def toLines(self):
+    def toLines(self) -> None:
         return _LayoutScript.cell_toLines(self)
 
-    def toLinesSelect(self):
+    def toLinesSelect(self) -> None:
         return _LayoutScript.cell_toLinesSelect(self)
 
-    def toMeshSelect(self, width, spaceing):
-        return _LayoutScript.cell_toMeshSelect(self, width, spaceing)
+    def toMeshSelect(self, width: int, spacing: int) -> None:
+        return _LayoutScript.cell_toMeshSelect(self, width, spacing)
 
-    def toPath(self):
+    def toPath(self) -> None:
         return _LayoutScript.cell_toPath(self)
 
-    def toPathSelect(self):
+    def toPathSelect(self) -> None:
         return _LayoutScript.cell_toPathSelect(self)
 
-    def toPolygon(self):
+    def toPolygon(self) -> None:
         return _LayoutScript.cell_toPolygon(self)
 
-    def toPolygonSelect(self):
+    def toPolygonSelect(self) -> None:
         return _LayoutScript.cell_toPolygonSelect(self)
 
-    def triangulateSelect(self, layer):
+    def triangulateSelect(self, layer: int) -> None:
         return _LayoutScript.cell_triangulateSelect(self, layer)
 
-    def useCell(self, Cell):
+    def useCell(self, Cell: cell) -> bool:
         return _LayoutScript.cell_useCell(self, Cell)
 
-    def setPresentationSelect(self, arg2):
+    def setPresentationSelect(self, arg2: int) -> None:
         return _LayoutScript.cell_setPresentationSelect(self, arg2)
 
-    def setMirrorxSelect(self):
+    def setMirrorxSelect(self) -> None:
         return _LayoutScript.cell_setMirrorxSelect(self)
 
-    def toggleMirrorxSelect(self):
+    def toggleMirrorxSelect(self) -> None:
         return _LayoutScript.cell_toggleMirrorxSelect(self)
 
-    def clearMirrorxSelect(self):
+    def clearMirrorxSelect(self) -> None:
         return _LayoutScript.cell_clearMirrorxSelect(self)
 
-    def sizeadjustSelect(self, *args):
+    def sizeadjustSelect(self, *args: Any) -> None:
         return _LayoutScript.cell_sizeadjustSelect(self, *args)
 
     __swig_destroy__ = _LayoutScript.delete_cell
@@ -1279,7 +1394,7 @@ def console_send(app, command):
     return _LayoutScript.console_send(app, command)
 
 
-class drawingField(object):
+class drawingField:
     thisown = property(
         lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
     )
@@ -1288,649 +1403,753 @@ class drawingField(object):
         raise AttributeError("No constructor defined")
 
     __repr__ = _swig_repr
-    activeLayer = property(
+
+    activeLayer: int = property(
         _LayoutScript.drawingField_activeLayer_get,
         _LayoutScript.drawingField_activeLayer_set,
     )
 
-    def addConvexPolygon(self):
+    def addConvexPolygon(self) -> None:
         return _LayoutScript.drawingField_addConvexPolygon(self)
 
-    def addBoundingBox(self):
+    def addBoundingBox(self) -> None:
         return _LayoutScript.drawingField_addBoundingBox(self)
 
-    def addCell(self):
+    def addCell(self) -> "cellList":
         return _LayoutScript.drawingField_addCell(self)
 
-    def addHierarchy(self, nx, ny):
+    def addHierarchy(self, nx: int, ny: int) -> None:
         return _LayoutScript.drawingField_addHierarchy(self, nx, ny)
 
-    def alignCenterXY(self):
+    def alignCenterXY(self) -> None:
         return _LayoutScript.drawingField_alignCenterXY(self)
 
-    def alignCenterX(self):
+    def alignCenterX(self) -> None:
         return _LayoutScript.drawingField_alignCenterX(self)
 
-    def alignCenterY(self):
+    def alignCenterY(self) -> None:
         return _LayoutScript.drawingField_alignCenterY(self)
 
-    def alignLeft(self):
+    def alignLeft(self) -> None:
         return _LayoutScript.drawingField_alignLeft(self)
 
-    def alignTop(self):
+    def alignTop(self) -> None:
         return _LayoutScript.drawingField_alignTop(self)
 
-    def alignRight(self):
+    def alignRight(self) -> None:
         return _LayoutScript.drawingField_alignRight(self)
 
-    def alignBottom(self):
+    def alignBottom(self) -> None:
         return _LayoutScript.drawingField_alignBottom(self)
 
-    def alignValue(self, dis):
+    def alignValue(self, dis: int) -> None:
         return _LayoutScript.drawingField_alignValue(self, dis)
 
-    def arc(self):
+    def arc(self) -> None:
         return _LayoutScript.drawingField_arc(self)
 
-    def arrayCopy(self, nx, ny):
+    def arrayCopy(self, nx: int, ny: int) -> None:
         return _LayoutScript.drawingField_arrayCopy(self, nx, ny)
 
-    def autoRuler(self, arg2):
-        return _LayoutScript.drawingField_autoRuler(self, arg2)
+    def autoRuler(self, pos: point) -> None:
+        return _LayoutScript.drawingField_autoRuler(self, pos)
 
-    def bezier2(self):
+    def bezier2(self) -> None:
         return _LayoutScript.drawingField_bezier2(self)
 
-    def bezier3(self):
+    def bezier3(self) -> None:
         return _LayoutScript.drawingField_bezier3(self)
 
-    def boxSelect(self):
+    def boxSelect(self) -> None:
         return _LayoutScript.drawingField_boxSelect(self)
 
-    def boxDeselect(self):
+    def boxDeselect(self) -> None:
         return _LayoutScript.drawingField_boxDeselect(self)
 
-    def box(self):
+    def box(self) -> None:
         return _LayoutScript.drawingField_box(self)
 
-    def BSpline(self):
+    def BSpline(self) -> None:
         return _LayoutScript.drawingField_BSpline(self)
 
-    def cSelect(self):
+    def cSelect(self) -> None:
         return _LayoutScript.drawingField_cSelect(self)
 
-    def cDeselect(self):
+    def cDeselect(self) -> None:
         return _LayoutScript.drawingField_cDeselect(self)
 
-    def cellRef(self, s):
+    def cellRef(self, s: str) -> None:
         return _LayoutScript.drawingField_cellRef(self, s)
 
-    def cellrefarray(self, s, x, y):
+    def cellrefarray(self, s: str, x: int, y: int) -> None:
         return _LayoutScript.drawingField_cellrefarray(self, s, x, y)
 
-    def cellUp(self):
+    def cellUp(self) -> None:
         return _LayoutScript.drawingField_cellUp(self)
 
-    def centerXY(self):
+    def centerXY(self) -> None:
         return _LayoutScript.drawingField_centerXY(self)
 
-    def centerX(self):
+    def centerX(self) -> None:
         return _LayoutScript.drawingField_centerX(self)
 
-    def centerY(self):
+    def centerY(self) -> None:
         return _LayoutScript.drawingField_centerY(self)
 
-    def circle(self):
+    def circle(self) -> None:
         return _LayoutScript.drawingField_circle(self)
 
-    def circleBox(self):
+    def circleBox(self) -> None:
         return _LayoutScript.drawingField_circleBox(self)
 
-    def circleFit(self):
+    def circleFit(self) -> None:
         return _LayoutScript.drawingField_circleFit(self)
 
-    def clearPoints(self):
+    def clearPoints(self) -> None:
         return _LayoutScript.drawingField_clearPoints(self)
 
-    def clearMirrorx(self):
+    def clearMirrorx(self) -> None:
         return _LayoutScript.drawingField_clearMirrorx(self)
 
-    def clearProperties(self):
+    def clearProperties(self) -> None:
         return _LayoutScript.drawingField_clearProperties(self)
 
-    def closeToPolygon(self):
+    def closeToPolygon(self) -> None:
         return _LayoutScript.drawingField_closeToPolygon(self)
 
-    def closedPathToPolygon(self):
+    def closedPathToPolygon(self) -> None:
         return _LayoutScript.drawingField_closedPathToPolygon(self)
 
-    def coil(self, turns):
+    def coil(self, turns: int) -> None:
         return _LayoutScript.drawingField_coil(self, turns)
 
-    def compareCell(self, s):
+    def compareCell(self, s: str) -> None:
         return _LayoutScript.drawingField_compareCell(self, s)
 
-    def compareCellXor(self, s):
+    def compareCellXor(self, s: str) -> None:
         return _LayoutScript.drawingField_compareCellXor(self, s)
 
-    def copyCurrentCell(self):
+    def copyCurrentCell(self) -> None:
         return _LayoutScript.drawingField_copyCurrentCell(self)
 
-    def copy(self):
+    def copy(self) -> None:
         return _LayoutScript.drawingField_copy(self)
 
-    def copyArea(self, *args):
+    @overload
+    def copyArea(self, r: rect, layerSource: int, layerDest: int) -> None: ...
+
+    @overload
+    def copyArea(
+        self, minArea: float, maxArea: float, layerDest: int, layerSource: int
+    ) -> None: ...
+
+    def copyArea(self, *args: Any) -> None:
         return _LayoutScript.drawingField_copyArea(self, *args)
 
     def copyDimension(
-        self, minWidth, maxwidth, minLength, maxLangth, layerDest, layerSource=-1
-    ):
+        self,
+        minWidth: int,
+        maxwidth: int,
+        minLength: int,
+        maxLength: int,
+        layerDest: int,
+        layerSource: int = -1,
+    ) -> None:
         return _LayoutScript.drawingField_copyDimension(
-            self, minWidth, maxwidth, minLength, maxLangth, layerDest, layerSource
+            self, minWidth, maxwidth, minLength, maxLength, layerDest, layerSource
         )
 
-    def copyTouching(self, layerA, layerB, layerOutA, layerOutB=-1):
+    def copyTouching(
+        self, layerA: int, layerB: int, layerOutA: int, layerOutB: int = -1
+    ) -> None:
         return _LayoutScript.drawingField_copyTouching(
             self, layerA, layerB, layerOutA, layerOutB
         )
 
-    def copyOverlapping(self, layerA, layerB, layerOutA, layerOutB=-1):
+    def copyOverlapping(
+        self, layerA: int, layerB: int, layerOutA: int, layerOutB: int = -1
+    ) -> None:
         return _LayoutScript.drawingField_copyOverlapping(
             self, layerA, layerB, layerOutA, layerOutB
         )
 
-    def copyTouchingOrOverlapping(self, layerA, layerB, layerOutA, layerOutB=-1):
+    def copyTouchingOrOverlapping(
+        self, layerA: int, layerB: int, layerOutA: int, layerOutB: int = -1
+    ) -> None:
         return _LayoutScript.drawingField_copyTouchingOrOverlapping(
             self, layerA, layerB, layerOutA, layerOutB
         )
 
-    def copyLayerToCell(self, layer):
+    def copyLayerToCell(self, layer: int) -> cell:
         return _LayoutScript.drawingField_copyLayerToCell(self, layer)
 
-    def copyLayerSized(self, sourcelayer, destinationlayer, size, type):
+    def copyLayerSized(
+        self, sourcelayer: int, destinationlayer: int, size: int, type: int
+    ) -> None:
         return _LayoutScript.drawingField_copyLayerSized(
             self, sourcelayer, destinationlayer, size, type
         )
 
-    def copyLayerSizedAsym(self, sourcelayer, destinationlayer, sizeX, sizeY):
+    def copyLayerSizedAsym(
+        self, sourcelayer: int, destinationlayer: int, sizeX: int, sizeY: int
+    ) -> None:
         return _LayoutScript.drawingField_copyLayerSizedAsym(
             self, sourcelayer, destinationlayer, sizeX, sizeY
         )
 
-    def copyLayer(self, sourceLayer, sourceDatatype, destLayer):
+    def copyLayer(self, sourceLayer: int, sourceDatatype: int, destLayer: int) -> None:
         return _LayoutScript.drawingField_copyLayer(
             self, sourceLayer, sourceDatatype, destLayer
         )
 
-    def copyMirror(self):
+    def copyMirror(self) -> None:
         return _LayoutScript.drawingField_copyMirror(self)
 
-    def crossSection(self, *args):
+    @overload
+    def crossSection(self) -> None: ...
+
+    @overload
+    def crossSection(self, p1: point, p2: point) -> None: ...
+
+    def crossSection(self, *args: Any) -> None:
         return _LayoutScript.drawingField_crossSection(self, *args)
 
-    currentCell = property(
+    currentCell: cell = property(
         _LayoutScript.drawingField_currentCell_get,
         _LayoutScript.drawingField_currentCell_set,
     )
 
-    def cut(self):
+    def cut(self) -> None:
         return _LayoutScript.drawingField_cut(self)
 
-    databaseunits = property(
+    databaseunits: float = property(
         _LayoutScript.drawingField_databaseunits_get,
         _LayoutScript.drawingField_databaseunits_set,
     )
 
-    def deselectAll(self):
+    def deselectAll(self) -> None:
         return _LayoutScript.drawingField_deselectAll(self)
 
-    def deselectActiveLayer(self):
+    def deselectActiveLayer(self) -> None:
         return _LayoutScript.drawingField_deselectActiveLayer(self)
 
-    def deleteSelect(self):
+    def deleteSelect(self) -> None:
         return _LayoutScript.drawingField_deleteSelect(self)
 
-    def deleteCell(self, arg2):
-        return _LayoutScript.drawingField_deleteCell(self, arg2)
+    def deleteCell(self, cellPtr: cell) -> None:
+        return _LayoutScript.drawingField_deleteCell(self, cellPtr)
 
-    def deleteActuellCell(self):
+    def deleteActuellCell(self) -> None:
         return _LayoutScript.drawingField_deleteActuellCell(self)
 
-    def deleteCurrentCell(self):
+    def deleteCurrentCell(self) -> None:
         return _LayoutScript.drawingField_deleteCurrentCell(self)
 
-    def deleteAllCell(self):
+    def deleteAllCell(self) -> None:
         return _LayoutScript.drawingField_deleteAllCell(self)
 
-    def dot(self):
+    def dot(self) -> None:
         return _LayoutScript.drawingField_dot(self)
 
-    def delPoint(self):
+    def delPoint(self) -> None:
         return _LayoutScript.drawingField_delPoint(self)
 
-    def deleteExceptOneLayer(self, layer):
+    def deleteExceptOneLayer(self, layer: int) -> None:
         return _LayoutScript.drawingField_deleteExceptOneLayer(self, layer)
 
-    def deleteLayer(self, *args):
+    @overload
+    def deleteLayer(self, layer: int) -> None: ...
+
+    @overload
+    def deleteLayer(self, layer: int, datatype: int) -> None: ...
+
+    def deleteLayer(self, *args: Any) -> None:
         return _LayoutScript.drawingField_deleteLayer(self, *args)
 
-    def deleteText(self):
+    def deleteText(self) -> None:
         return _LayoutScript.drawingField_deleteText(self)
 
-    def deleteZeroWidthPath(self):
+    def deleteZeroWidthPath(self) -> None:
         return _LayoutScript.drawingField_deleteZeroWidthPath(self)
 
-    def derivedLayer(self, layerA, layerB, resultLayer, operation):
+    def derivedLayer(
+        self, layerA: int, layerB: int, resultLayer: int, operation: str
+    ) -> None:
         return _LayoutScript.drawingField_derivedLayer(
             self, layerA, layerB, resultLayer, operation
         )
 
-    def densityFill(self, layer, density, shapeSpace, minWidth, minSpace, frameSize):
+    def densityFill(
+        self,
+        layer: int,
+        density: float,
+        shapeSpace: int,
+        minWidth: int,
+        minSpace: int,
+        frameSize: int,
+    ) -> None:
         return _LayoutScript.drawingField_densityFill(
             self, layer, density, shapeSpace, minWidth, minSpace, frameSize
         )
 
-    def existCellname(self, s):
+    def existCellname(self, s: str) -> bool:
         return _LayoutScript.drawingField_existCellname(self, s)
 
-    def ellipse(self):
+    def ellipse(self) -> None:
         return _LayoutScript.drawingField_ellipse(self)
 
-    def extractCurrentCell(self):
+    def extractCurrentCell(self) -> None:
         return _LayoutScript.drawingField_extractCurrentCell(self)
 
-    def extractActiveLayer(self):
+    def extractActiveLayer(self) -> None:
         return _LayoutScript.drawingField_extractActiveLayer(self)
 
-    def extractLayer(self, layer):
+    def extractLayer(self, layer: int) -> None:
         return _LayoutScript.drawingField_extractLayer(self, layer)
 
-    firstCell = property(
+    firstCell: "cellList" = property(
         _LayoutScript.drawingField_firstCell_get,
         _LayoutScript.drawingField_firstCell_set,
     )
-    fileType = property(
+    fileType: str = property(
         _LayoutScript.drawingField_fileType_get, _LayoutScript.drawingField_fileType_set
     )
 
-    def findCell(self, s):
+    def findCell(self, s: str) -> cell:
         return _LayoutScript.drawingField_findCell(self, s)
 
-    def findCellRegExp(self, s):
-        return _LayoutScript.drawingField_findCellRegExp(self, s)
+    def findCellRegExp(self, regExp: str) -> "stringList":
+        return _LayoutScript.drawingField_findCellRegExp(self, regExp)
 
-    def findTopCell(self):
+    def findTopCell(self) -> cell:
         return _LayoutScript.drawingField_findTopCell(self)
 
-    def flat(self):
+    def flat(self) -> None:
         return _LayoutScript.drawingField_flat(self)
 
-    def flatAll(self):
+    def flatAll(self) -> None:
         return _LayoutScript.drawingField_flatAll(self)
 
-    def fillSelectedShapes(self, *args):
+    @overload
+    def fillSelectedShapes(self, cellref: cell, align: int = 0) -> None: ...
+
+    @overload
+    def fillSelectedShapes(self, cellname: str, align: int = 0) -> None: ...
+
+    def fillSelectedShapes(self, *args: Any) -> None:
         return _LayoutScript.drawingField_fillSelectedShapes(self, *args)
 
-    def fSelect(self):
+    def fSelect(self) -> None:
         return _LayoutScript.drawingField_fSelect(self)
 
-    def fAllSelect(self):
+    def fAllSelect(self) -> None:
         return _LayoutScript.drawingField_fAllSelect(self)
 
-    def fDeselect(self):
+    def fDeselect(self) -> None:
         return _LayoutScript.drawingField_fDeselect(self)
 
-    def fAllDeselect(self):
+    def fAllDeselect(self) -> None:
         return _LayoutScript.drawingField_fAllDeselect(self)
 
-    gridX = property(
+    gridX: int = property(
         _LayoutScript.drawingField_gridX_get, _LayoutScript.drawingField_gridX_set
     )
-    gridY = property(
+    gridY: int = property(
         _LayoutScript.drawingField_gridY_get, _LayoutScript.drawingField_gridY_set
     )
-    gridOffsetX = property(
+    gridOffsetX: int = property(
         _LayoutScript.drawingField_gridOffsetX_get,
         _LayoutScript.drawingField_gridOffsetX_set,
     )
-    gridOffsetY = property(
+    gridOffsetY: int = property(
         _LayoutScript.drawingField_gridOffsetY_get,
         _LayoutScript.drawingField_gridOffsetY_set,
     )
-    gridMinimum = property(
+    gridMinimum: int = property(
         _LayoutScript.drawingField_gridMinimum_get,
         _LayoutScript.drawingField_gridMinimum_set,
     )
-    gridauto = property(
+    gridauto: bool = property(
         _LayoutScript.drawingField_gridauto_get, _LayoutScript.drawingField_gridauto_set
     )
 
-    def getView(self, scale, x, y):
+    def getView(self, scale: float, x: int, y: int) -> str:
         return _LayoutScript.drawingField_getView(self, scale, x, y)
 
-    def getViewMacro(self):
+    def getViewMacro(self) -> str:
         return _LayoutScript.drawingField_getViewMacro(self)
 
-    def getPoints(self):
+    def getPoints(self) -> "pointArray":
         return _LayoutScript.drawingField_getPoints(self)
 
-    def groupSimple(self):
+    def groupSimple(self) -> None:
         return _LayoutScript.drawingField_groupSimple(self)
 
-    def group(self):
+    def group(self) -> None:
         return _LayoutScript.drawingField_group(self)
 
-    def groupStructure(self):
+    def groupStructure(self) -> int:
         return _LayoutScript.drawingField_groupStructure(self)
 
-    def groupGlobal(self):
+    def groupGlobal(self) -> int:
         return _LayoutScript.drawingField_groupGlobal(self)
 
-    def invertSelect(self):
+    def invertSelect(self) -> None:
         return _LayoutScript.drawingField_invertSelect(self)
 
-    def importFile(self, s):
+    def importFile(self, s: str) -> None:
         return _LayoutScript.drawingField_importFile(self, s)
 
-    def importViaFile(self, s):
+    def importViaFile(self, s: str) -> None:
         return _LayoutScript.drawingField_importViaFile(self, s)
 
-    def importView(self, library, cellName, viewName):
+    def importView(self, library: str, cellName: str, viewName: str) -> None:
         return _LayoutScript.drawingField_importView(self, library, cellName, viewName)
 
-    libname = property(
+    libname: str = property(
         _LayoutScript.drawingField_libname_get, _LayoutScript.drawingField_libname_set
     )
 
-    def mergeSelect(self):
+    def mergeSelect(self) -> None:
         return _LayoutScript.drawingField_mergeSelect(self)
 
-    def move(self):
+    def move(self) -> None:
         return _LayoutScript.drawingField_move(self)
 
-    def moveX(self):
+    def moveX(self) -> None:
         return _LayoutScript.drawingField_moveX(self)
 
-    def moveY(self):
+    def moveY(self) -> None:
         return _LayoutScript.drawingField_moveY(self)
 
-    def moveOrigin(self):
+    def moveOrigin(self) -> None:
         return _LayoutScript.drawingField_moveOrigin(self)
 
-    def mapLayer(self, t):
+    def mapLayer(self, t: "layerTranslator") -> None:
         return _LayoutScript.drawingField_mapLayer(self, t)
 
-    def mirror(self):
+    def mirror(self) -> None:
         return _LayoutScript.drawingField_mirror(self)
 
-    def moveLayer(self, sourceLayer, sourceDatatype, destLayer):
+    def moveLayer(self, sourceLayer: int, sourceDatatype: int, destLayer: int) -> None:
         return _LayoutScript.drawingField_moveLayer(
             self, sourceLayer, sourceDatatype, destLayer
         )
 
-    def modified(self):
+    def modified(self) -> bool:
         return _LayoutScript.drawingField_modified(self)
 
-    def newCell(self):
+    def newCell(self) -> None:
         return _LayoutScript.drawingField_newCell(self)
 
-    def openFile(self, s):
+    def openFile(self, s: str) -> None:
         return _LayoutScript.drawingField_openFile(self, s)
 
-    def openView(self, library, cellName, viewName):
+    def openView(self, library: str, cellName: str, viewName: str) -> None:
         return _LayoutScript.drawingField_openView(self, library, cellName, viewName)
 
-    def pSelect(self):
+    def pSelect(self) -> None:
         return _LayoutScript.drawingField_pSelect(self)
 
-    def pDeselect(self):
+    def pDeselect(self) -> None:
         return _LayoutScript.drawingField_pDeselect(self)
 
-    def pathSelect(self):
+    def pathSelect(self) -> None:
         return _LayoutScript.drawingField_pathSelect(self)
 
-    def pathDeselect(self):
+    def pathDeselect(self) -> None:
         return _LayoutScript.drawingField_pathDeselect(self)
 
-    def polygonSelect(self):
+    def polygonSelect(self) -> None:
         return _LayoutScript.drawingField_polygonSelect(self)
 
-    def polygonDeselect(self):
+    def polygonDeselect(self) -> None:
         return _LayoutScript.drawingField_polygonDeselect(self)
 
-    previousCell = property(
+    previousCell: str = property(
         _LayoutScript.drawingField_previousCell_get,
         _LayoutScript.drawingField_previousCell_set,
     )
 
-    def prepareUndo(self):
+    def prepareUndo(self) -> None:
         return _LayoutScript.drawingField_prepareUndo(self)
 
-    def p(self, x, y):
-        return _LayoutScript.drawingField_p(self, x, y)
+    @overload
+    def p(self, x: float, y: float) -> None: ...
 
-    def pRel(self, x, y):
-        return _LayoutScript.drawingField_pRel(self, x, y)
+    @overload
+    def p(self, p: point) -> None: ...
 
-    def pDir(self, length, dir):
+    def p(self, *args: Any) -> None:
+        return _LayoutScript.drawingField_p(self, *args)
+
+    @overload
+    def pRel(self, x: float, y: float) -> None: ...
+
+    @overload
+    def pRel(self, p: point) -> None: ...
+
+    def pRel(self, *args: Any) -> None:
+        return _LayoutScript.drawingField_pRel(self, *args)
+
+    def pDir(self, length: float, dir: float) -> None:
         return _LayoutScript.drawingField_pDir(self, length, dir)
 
-    def pMove(self, x, y):
+    def pMove(self, x: float, y: float) -> None:
         return _LayoutScript.drawingField_pMove(self, x, y)
 
-    def pointMove(self, *args):
+    @overload
+    def pointMove(self, x: int, y: int) -> None: ...
+
+    @overload
+    def pointMove(self, p: point) -> None: ...
+
+    def pointMove(self, *args: Any) -> None:
         return _LayoutScript.drawingField_pointMove(self, *args)
 
-    def polygon(self):
-        return _LayoutScript.drawingField_polygon(self)
+    @overload
+    def point(self, x: int, y: int) -> None: ...
 
-    def path(self):
-        return _LayoutScript.drawingField_path(self)
+    @overload
+    def point(self, p: point) -> None: ...
 
-    def polygonArc(self):
-        return _LayoutScript.drawingField_polygonArc(self)
-
-    def point(self, *args):
+    def point(self, *args: Any) -> None:
         return _LayoutScript.drawingField_point(self, *args)
 
-    def pointRel(self, *args):
+    @overload
+    def pointRel(self, x: int, y: int) -> None: ...
+
+    @overload
+    def pointRel(self, p: point) -> None: ...
+
+    def pointRel(self, *args: Any) -> None:
         return _LayoutScript.drawingField_pointRel(self, *args)
 
-    def removeCellArrays(self):
+    def polygon(self) -> None:
+        return _LayoutScript.drawingField_polygon(self)
+
+    def path(self) -> None:
+        return _LayoutScript.drawingField_path(self)
+
+    def polygonArc(self) -> None:
+        return _LayoutScript.drawingField_polygonArc(self)
+
+    def removeCellArrays(self) -> None:
         return _LayoutScript.drawingField_removeCellArrays(self)
 
-    def removeRotatedCellArrays(self):
+    def removeRotatedCellArrays(self) -> None:
         return _LayoutScript.drawingField_removeRotatedCellArrays(self)
 
-    def removeNotOrthogonalCellref(self):
+    def removeNotOrthogonalCellref(self) -> None:
         return _LayoutScript.drawingField_removeNotOrthogonalCellref(self)
 
-    def removeScaledCellref(self):
+    def removeScaledCellref(self) -> None:
         return _LayoutScript.drawingField_removeScaledCellref(self)
 
-    def removeOverlap(self, *args):
+    @overload
+    def removeOverlap(self) -> None: ...
+
+    @overload
+    def removeOverlap(self, layer: int) -> None: ...
+
+    def removeOverlap(self, *args: Any) -> None:
         return _LayoutScript.drawingField_removeOverlap(self, *args)
 
-    def rotate(self, angle):
+    def rotate(self, angle: float) -> None:
         return _LayoutScript.drawingField_rotate(self, angle)
 
-    def relink(self, cell):
+    def relink(self, cell: str) -> None:
         return _LayoutScript.drawingField_relink(self, cell)
 
-    def redo(self):
+    def redo(self) -> None:
         return _LayoutScript.drawingField_redo(self)
 
-    def resetUndo(self):
+    def resetUndo(self) -> None:
         return _LayoutScript.drawingField_resetUndo(self)
 
-    def spiral(self):
+    def spiral(self) -> None:
         return _LayoutScript.drawingField_spiral(self)
 
-    def selectAll(self):
+    def selectAll(self) -> None:
         return _LayoutScript.drawingField_selectAll(self)
 
-    def selectVisible(self):
+    def selectVisible(self) -> None:
         return _LayoutScript.drawingField_selectVisible(self)
 
-    def selectActiveLayer(self):
+    def selectActiveLayer(self) -> None:
         return _LayoutScript.drawingField_selectActiveLayer(self)
 
-    def scale(self, *args):
+    @overload
+    def scale(self) -> None: ...
+
+    @overload
+    def scale(self, scale: float) -> None: ...
+
+    @overload
+    def scale(self, p1: point, p2: point) -> None: ...
+
+    def scale(self, *args: Any) -> None:
         return _LayoutScript.drawingField_scale(self, *args)
 
-    def setWidth(self, w):
+    def setWidth(self, w: int) -> None:
         return _LayoutScript.drawingField_setWidth(self, w)
 
-    def setCap(self, w):
+    def setCap(self, w: int) -> None:
         return _LayoutScript.drawingField_setCap(self, w)
 
-    def stripUnneeded(self):
+    def stripUnneeded(self) -> None:
         return _LayoutScript.drawingField_stripUnneeded(self)
 
-    def stripIdenticalElements(self):
+    def stripIdenticalElements(self) -> None:
         return _LayoutScript.drawingField_stripIdenticalElements(self)
 
-    def stripEmptyCells(self):
+    def stripEmptyCells(self) -> None:
         return _LayoutScript.drawingField_stripEmptyCells(self)
 
-    def sizeLayer(self, layer, size):
+    def sizeLayer(self, layer: int, size: int) -> None:
         return _LayoutScript.drawingField_sizeLayer(self, layer, size)
 
-    def selectText(self, textname):
+    def selectText(self, textname: str) -> None:
         return _LayoutScript.drawingField_selectText(self, textname)
 
-    def selectCellref(self, cellname):
+    def selectCellref(self, cellname: str) -> None:
         return _LayoutScript.drawingField_selectCellref(self, cellname)
 
-    def setGrid(self, raster):
+    def setGrid(self, raster: int) -> None:
         return _LayoutScript.drawingField_setGrid(self, raster)
 
-    def setCell(self, *args):
+    @overload
+    def setCell(self, cellname: str) -> bool: ...
+
+    @overload
+    def setCell(self, Cell: cell) -> None: ...
+
+    def setCell(self, *args: Any) -> Union[bool, None]:
         return _LayoutScript.drawingField_setCell(self, *args)
 
-    def scaledCell(self, c, sx, sy):
+    def scaledCell(self, c: cell, sx: float, sy: float) -> cell:
         return _LayoutScript.drawingField_scaledCell(self, c, sx, sy)
 
-    def scalePlus(self):
+    def scalePlus(self) -> None:
         return _LayoutScript.drawingField_scalePlus(self)
 
-    def scaleMinus(self):
+    def scaleMinus(self) -> None:
         return _LayoutScript.drawingField_scaleMinus(self)
 
-    def scaleFull(self):
+    def scaleFull(self) -> None:
         return _LayoutScript.drawingField_scaleFull(self)
 
-    def scaleSelect(self):
+    def scaleSelect(self) -> None:
         return _LayoutScript.drawingField_scaleSelect(self)
 
-    def scaleEins(self):
+    def scaleEins(self) -> None:
         return _LayoutScript.drawingField_scaleEins(self)
 
-    def scrollLeft(self):
+    def scrollLeft(self) -> None:
         return _LayoutScript.drawingField_scrollLeft(self)
 
-    def scrollRight(self):
+    def scrollRight(self) -> None:
         return _LayoutScript.drawingField_scrollRight(self)
 
-    def scrollUp(self):
+    def scrollUp(self) -> None:
         return _LayoutScript.drawingField_scrollUp(self)
 
-    def scrollDown(self):
+    def scrollDown(self) -> None:
         return _LayoutScript.drawingField_scrollDown(self)
 
-    def setView(self, scale, x, y):
+    def setView(self, scale: float, x: int, y: int) -> None:
         return _LayoutScript.drawingField_setView(self, scale, x, y)
 
-    def showGridToggle(self):
+    def showGridToggle(self) -> None:
         return _LayoutScript.drawingField_showGridToggle(self)
 
-    def setAutoGrid(self):
+    def setAutoGrid(self) -> None:
         return _LayoutScript.drawingField_setAutoGrid(self)
 
-    def saveFile(self, s):
+    def saveFile(self, s: str) -> None:
         return _LayoutScript.drawingField_saveFile(self, s)
 
-    def sector(self):
+    def sector(self) -> None:
         return _LayoutScript.drawingField_sector(self)
 
-    def searchPattern(self):
+    def searchPattern(self) -> None:
         return _LayoutScript.drawingField_searchPattern(self)
 
-    def swapLayer(self, i, k):
+    def swapLayer(self, i: int, k: int) -> None:
         return _LayoutScript.drawingField_swapLayer(self, i, k)
 
-    def swapLayerSelect(self, i, k):
+    def swapLayerSelect(self, i: int, k: int) -> None:
         return _LayoutScript.drawingField_swapLayerSelect(self, i, k)
 
-    def swapLayerAll(self, i, k):
+    def swapLayerAll(self, i: int, k: int) -> None:
         return _LayoutScript.drawingField_swapLayerAll(self, i, k)
 
-    def saveLayer(self, fileName, layer):
+    def saveLayer(self, fileName: str, layer: int) -> None:
         return _LayoutScript.drawingField_saveLayer(self, fileName, layer)
 
-    def saveScreenshot(self, filename):
+    def saveScreenshot(self, filename: str) -> None:
         return _LayoutScript.drawingField_saveScreenshot(self, filename)
 
-    def setModifyChanged(self):
+    def setModifyChanged(self) -> None:
         return _LayoutScript.drawingField_setModifyChanged(self)
 
-    def setModifyAdded(self):
+    def setModifyAdded(self) -> None:
         return _LayoutScript.drawingField_setModifyAdded(self)
 
-    def setModifySaved(self):
+    def setModifySaved(self) -> None:
         return _LayoutScript.drawingField_setModifySaved(self)
 
-    def separateLayer(self, arg2, layer):
-        return _LayoutScript.drawingField_separateLayer(self, arg2, layer)
+    def separateLayer(self, drawingWindow: drawingField, layer: int) -> None:
+        return _LayoutScript.drawingField_separateLayer(self, drawingWindow, layer)
 
-    def setPresentation(self, arg2):
+    def setPresentation(self, arg2: int) -> None:
         return _LayoutScript.drawingField_setPresentation(self, arg2)
 
-    def setMirrorx(self):
+    def setMirrorx(self) -> None:
         return _LayoutScript.drawingField_setMirrorx(self)
 
-    def textSelect(self):
+    def textSelect(self) -> None:
         return _LayoutScript.drawingField_textSelect(self)
 
-    def textDeselect(self):
+    def textDeselect(self) -> None:
         return _LayoutScript.drawingField_textDeselect(self)
 
-    def text(self, s):
+    def text(self, s: str) -> None:
         return _LayoutScript.drawingField_text(self, s)
 
-    def toBox(self):
+    def toBox(self) -> None:
         return _LayoutScript.drawingField_toBox(self)
 
-    def toPolygon(self):
+    def toPolygon(self) -> None:
         return _LayoutScript.drawingField_toPolygon(self)
 
-    def toPath(self):
+    def toPath(self) -> None:
         return _LayoutScript.drawingField_toPath(self)
 
-    def toCircle(self):
+    def toCircle(self) -> None:
         return _LayoutScript.drawingField_toCircle(self)
 
-    def toLines(self):
+    def toLines(self) -> None:
         return _LayoutScript.drawingField_toLines(self)
 
-    def toggleMirrorx(self):
+    def toggleMirrorx(self) -> None:
         return _LayoutScript.drawingField_toggleMirrorx(self)
 
-    def undo(self):
+    def undo(self) -> None:
         return _LayoutScript.drawingField_undo(self)
 
-    def updateFile(self, s):
+    def updateFile(self, s: str) -> None:
         return _LayoutScript.drawingField_updateFile(self, s)
 
-    userunits = property(
+    userunits: float = property(
         _LayoutScript.drawingField_userunits_get,
         _LayoutScript.drawingField_userunits_set,
     )
 
-    def useLayer(self, layer):
+    def useLayer(self, layer: int) -> bool:
         return _LayoutScript.drawingField_useLayer(self, layer)
 
-    def unusedLayer(self, startLayer):
+    def unusedLayer(self, startLayer: int) -> int:
         return _LayoutScript.drawingField_unusedLayer(self, startLayer)
 
     __swig_destroy__ = _LayoutScript.delete_drawingField
@@ -2423,193 +2642,242 @@ class element(object):
         _LayoutScript.element_layerNum_get, _LayoutScript.element_layerNum_set
     )
 
-    def clearMirrorx(self):
+    def clearMirrorx(self) -> None:
         return _LayoutScript.element_clearMirrorx(self)
 
-    def clearProperties(self):
+    def clearProperties(self) -> None:
         return _LayoutScript.element_clearProperties(self)
 
-    datatype = property(
+    datatype: int = property(
         _LayoutScript.element_datatype_get, _LayoutScript.element_datatype_set
     )
 
-    def depend(self):
+    def depend(self) -> cell:
         return _LayoutScript.element_depend(self)
 
-    def deselectAll(self):
+    def deselectAll(self) -> None:
         return _LayoutScript.element_deselectAll(self)
 
-    def deleteSelect(self):
+    def deleteSelect(self) -> None:
         return _LayoutScript.element_deleteSelect(self)
 
-    def getBoundingBox(self):
+    def getBoundingBox(self) -> rect:
         return _LayoutScript.element_getBoundingBox(self)
 
-    def getCap(self):
+    def getCap(self) -> int:
         return _LayoutScript.element_getCap(self)
 
-    def getDatatype(self):
+    def getDatatype(self) -> int:
         return _LayoutScript.element_getDatatype(self)
 
-    def getName(self):
+    def getName(self) -> str:
         return _LayoutScript.element_getName(self)
 
-    def getNx(self):
+    def getNx(self) -> int:
         return _LayoutScript.element_getNx(self)
 
-    def getNy(self):
+    def getNy(self) -> int:
         return _LayoutScript.element_getNy(self)
 
-    def getPoints(self):
+    def getPoints(self) -> pointArray:
         return _LayoutScript.element_getPoints(self)
 
-    def getSelectedPoints(self):
+    def getSelectedPoints(self) -> pointArray:
         return _LayoutScript.element_getSelectedPoints(self)
 
-    def getPropertyString(self, *args):
+    @overload
+    def getPropertyString(self, key: str) -> str: ...
+
+    @overload
+    def getPropertyString(self, key: int) -> str: ...
+
+    def getPropertyString(self, *args) -> str:
         return _LayoutScript.element_getPropertyString(self, *args)
 
-    def getPresentation(self):
+    def getPresentation(self) -> int:
         return _LayoutScript.element_getPresentation(self)
 
-    def getTrans(self):
+    def getTrans(self) -> strans:
         return _LayoutScript.element_getTrans(self)
 
-    def getWidth(self):
+    def getWidth(self) -> int:
         return _LayoutScript.element_getWidth(self)
 
-    def invertSelect(self):
+    def invertSelect(self) -> None:
         return _LayoutScript.element_invertSelect(self)
 
-    def isBox(self):
+    def isBox(self) -> bool:
         return _LayoutScript.element_isBox(self)
 
-    def isCellref(self):
+    def isCellref(self) -> bool:
         return _LayoutScript.element_isCellref(self)
 
-    def isCellrefArray(self):
+    def isCellrefArray(self) -> bool:
         return _LayoutScript.element_isCellrefArray(self)
 
-    def isCircle(self, *args):
+    def isCircle(self, *args) -> bool:
         return _LayoutScript.element_isCircle(self, *args)
 
-    def isCircleList(self, arg2):
+    def isCircleList(self, arg2) -> bool:
         return _LayoutScript.element_isCircleList(self, arg2)
 
-    def isPath(self):
+    def isPath(self) -> bool:
         return _LayoutScript.element_isPath(self)
 
-    def isPolygon(self):
+    def isPolygon(self) -> bool:
         return _LayoutScript.element_isPolygon(self)
 
-    def isRaithMBMSPath(self):
+    def isRaithMBMSPath(self) -> bool:
         return _LayoutScript.element_isRaithMBMSPath(self)
 
-    def isText(self):
+    def isText(self) -> bool:
         return _LayoutScript.element_isText(self)
 
-    def isRectangle(self):
+    def isRectangle(self) -> bool:
         return _LayoutScript.element_isRectangle(self)
 
-    def isSquare(self):
+    def isSquare(self) -> bool:
         return _LayoutScript.element_isSquare(self)
 
-    def isShape(self):
+    def isShape(self) -> bool:
         return _LayoutScript.element_isShape(self)
+
+    @overload
+    def maximum(self, point: point) -> None: ...
+
+    @overload
+    def maximum(self) -> point: ...
 
     def maximum(self, *args):
         return _LayoutScript.element_maximum(self, *args)
 
-    def maximumSelect(self, *args):
+    @overload
+    def maximumSelect(self, point: point) -> None: ...
+
+    @overload
+    def maximumSelect(self) -> point: ...
+
+    def maximumSelect(self, *args) -> point:
         return _LayoutScript.element_maximumSelect(self, *args)
+
+    @overload
+    def minimum(self, point: point) -> None: ...
+
+    @overload
+    def minimum(self) -> point: ...
 
     def minimum(self, *args):
         return _LayoutScript.element_minimum(self, *args)
 
+    @overload
+    def minimumSelect(self, point: point) -> None: ...
+
+    @overload
+    def minimumSelect(self) -> point: ...
+
     def minimumSelect(self, *args):
         return _LayoutScript.element_minimumSelect(self, *args)
 
-    def replaceText(self, arg2, arg3):
-        return _LayoutScript.element_replaceText(self, arg2, arg3)
+    def replaceText(self, old: str, new: str) -> bool:
+        return _LayoutScript.element_replaceText(self, old, new)
 
-    def rotate(self, arg2):
-        return _LayoutScript.element_rotate(self, arg2)
+    def rotate(self, angle: float) -> None:
+        return _LayoutScript.element_rotate(self, angle)
 
-    def scale(self, arg2):
-        return _LayoutScript.element_scale(self, arg2)
+    def scale(self, scale: float) -> None:
+        return _LayoutScript.element_scale(self, scale)
 
-    select = property(
+    select: bool = property(
         _LayoutScript.element_select_get, _LayoutScript.element_select_set
     )
 
-    def selectAll(self):
+    def selectAll(self) -> None:
         return _LayoutScript.element_selectAll(self)
 
-    def selectDatatype(self, t):
+    def selectDatatype(self, t: int) -> None:
         return _LayoutScript.element_selectDatatype(self, t)
 
-    def selectVisible(self):
+    def selectVisible(self) -> None:
         return _LayoutScript.element_selectVisible(self)
 
-    def setCap(self, cap):
+    def setCap(self, cap: int) -> None:
         return _LayoutScript.element_setCap(self, cap)
 
-    def setCellRef(self, arg2):
-        return _LayoutScript.element_setCellRef(self, arg2)
+    def setCellRef(self, c: cell) -> None:
+        return _LayoutScript.element_setCellRef(self, c)
 
-    def setDatatype(self, t):
+    def setDatatype(self, t: int) -> None:
         return _LayoutScript.element_setDatatype(self, t)
 
-    def setDatatypeSelect(self, t):
+    def setDatatypeSelect(self, t: int) -> None:
         return _LayoutScript.element_setDatatypeSelect(self, t)
 
-    def setMirrorx(self):
+    def setMirrorx(self) -> None:
         return _LayoutScript.element_setMirrorx(self)
 
-    def setName(self, arg2):
-        return _LayoutScript.element_setName(self, arg2)
+    def setName(self, name: str) -> None:
+        return _LayoutScript.element_setName(self, name)
 
-    def setNx(self, arg2):
-        return _LayoutScript.element_setNx(self, arg2)
+    def setNx(self, val: int) -> None:
+        return _LayoutScript.element_setNx(self, val)
 
-    def setNy(self, arg2):
-        return _LayoutScript.element_setNy(self, arg2)
+    def setNy(self, val: int) -> None:
+        return _LayoutScript.element_setNy(self, val)
 
-    def setPoints(self, arg2):
-        return _LayoutScript.element_setPoints(self, arg2)
+    def setPoints(self, array: pointArray) -> None:
+        return _LayoutScript.element_setPoints(self, array)
 
-    def setPresentation(self, arg2):
-        return _LayoutScript.element_setPresentation(self, arg2)
+    def setPresentation(self, p: int) -> None:
+        return _LayoutScript.element_setPresentation(self, p)
+
+    @overload
+    def setPropertyString(self, num: int, value: str) -> None: ...
+
+    @overload
+    def setPropertyString(self, name: str, value: str) -> None: ...
 
     def setPropertyString(self, *args):
         return _LayoutScript.element_setPropertyString(self, *args)
 
-    def setTrans(self, arg2):
-        return _LayoutScript.element_setTrans(self, arg2)
+    def setTrans(self, t: strans) -> None:
+        return _LayoutScript.element_setTrans(self, t)
 
-    def setWidth(self, width):
+    def setWidth(self, width: int) -> None:
         return _LayoutScript.element_setWidth(self, width)
 
-    def toggleMirrorx(self):
+    def toggleMirrorx(self) -> None:
         return _LayoutScript.element_toggleMirrorx(self)
 
-    def decodeRaithPxxDataList(self):
+    def decodeRaithPxxDataList(
+        self,
+    ) -> Tuple[bool, int, float, float, float, int, int, int]:
         return _LayoutScript.element_decodeRaithPxxDataList(self)
 
-    def decodeRaithPxxData(self, v1, v2, v3, v4, v5, v6, v7):
+    def decodeRaithPxxData(
+        self, v1: int, v2: float, v3: float, v4: float, v5: int, v6: int, v7: int
+    ):
         return _LayoutScript.element_decodeRaithPxxData(
             self, v1, v2, v3, v4, v5, v6, v7
         )
 
-    def encodeRaithPxxData(self, arg2, arg3, arg4, arg5, arg6, arg7, arg8):
+    def encodeRaithPxxData(
+        self,
+        arg2: int,
+        arg3: float,
+        arg4: float,
+        arg5: float,
+        arg6: int,
+        arg7: int,
+        arg8: int,
+    ):
         return _LayoutScript.element_encodeRaithPxxData(
             self, arg2, arg3, arg4, arg5, arg6, arg7, arg8
         )
 
-    def setRaithDosis(self, arg2):
+    def setRaithDosis(self, arg2: float) -> None:
         return _LayoutScript.element_setRaithDosis(self, arg2)
 
-    def getRaithDosis(self):
+    def getRaithDosis(self) -> float:
         return _LayoutScript.element_getRaithDosis(self)
 
     @staticmethod
@@ -3187,184 +3455,185 @@ class layout(object):
         lambda x: x.this.own(), lambda x, v: x.this.own(v), doc="The membership flag"
     )
     __repr__ = _swig_repr
-    backgroundTool = property(
+    backgroundTool: backgroundTool = property(
         _LayoutScript.layout_backgroundTool_get, _LayoutScript.layout_backgroundTool_set
     )
-    barcodeTool = property(
+    barcodeTool: barcodeTool = property(
         _LayoutScript.layout_barcodeTool_get, _LayoutScript.layout_barcodeTool_set
     )
-    booleanTool = property(
+    booleanTool: booleanHandler = property(
         _LayoutScript.layout_booleanTool_get, _LayoutScript.layout_booleanTool_set
     )
 
-    def closeDesign(self):
+    def closeDesign(self) -> None:
         return _LayoutScript.layout_closeDesign(self)
 
-    def choose(self):
+    def choose(self) -> None:
         return _LayoutScript.layout_choose(self)
 
-    def chooseImport(self):
+    def chooseImport(self) -> None:
         return _LayoutScript.layout_chooseImport(self)
 
-    debug = property(_LayoutScript.layout_debug_get, _LayoutScript.layout_debug_set)
-    drawing = property(
+    debug: bool = property(
+        _LayoutScript.layout_debug_get, _LayoutScript.layout_debug_set
+    )
+    drawing: drawingField = property(
         _LayoutScript.layout_drawing_get, _LayoutScript.layout_drawing_set
     )
-    drcTool = property(
+    drcTool: drc = property(
         _LayoutScript.layout_drcTool_get, _LayoutScript.layout_drcTool_set
     )
 
-    def executeMacro(self, *args):
-        return _LayoutScript.layout_executeMacro(self, *args)
+    def executeMacro(self, filename: str) -> int:
+        return _LayoutScript.layout_executeMacro(self, filename)
 
-    extractionTool = property(
+    extractionTool: extractionTool = property(
         _LayoutScript.layout_extractionTool_get, _LayoutScript.layout_extractionTool_set
     )
-    filename = property(
+    filename: str = property(
         _LayoutScript.layout_filename_get, _LayoutScript.layout_filename_set
     )
 
-    def getBool(self, caption, label):
+    def getBool(self, caption: str, label: str) -> int:
         return _LayoutScript.layout_getBool(self, caption, label)
 
-    def getText(self, *args):
-        return _LayoutScript.layout_getText(self, *args)
+    def getText(self, caption: str, label: str, value: str) -> str:
+        return _LayoutScript.layout_getText(self, caption, label, value)
 
-    def getItem(self, caption, lable, values):
+    def getItem(self, caption: str, lable: str, values: List[str]) -> str:
         return _LayoutScript.layout_getItem(self, caption, lable, values)
 
-    def getInteger(self, caption, lable, value=0):
-        return _LayoutScript.layout_getInteger(self, caption, lable, value)
+    def getInteger(self, caption: str, label: str, value: int = 0) -> int:
+        return _LayoutScript.layout_getInteger(self, caption, label, value)
 
-    def getSize(self, caption, lable, value=1):
-        return _LayoutScript.layout_getSize(self, caption, lable, value)
+    def getSize(self, caption: str, label: str, value: int = 1) -> int:
+        return _LayoutScript.layout_getSize(self, caption, label, value)
 
-    def getLayer(self, lable, value=0):
-        return _LayoutScript.layout_getLayer(self, lable, value)
+    def getLayer(self, label: str, value: int = 0) -> int:
+        return _LayoutScript.layout_getLayer(self, label, value)
 
-    def getDouble(self, caption, lable, value=0, digits=1):
-        return _LayoutScript.layout_getDouble(self, caption, lable, value, digits)
+    def getDouble(
+        self, caption: str, label: str, value: float = 0.0, digits: int = 1
+    ) -> float:
+        return _LayoutScript.layout_getDouble(self, caption, label, value, digits)
 
-    def getOpenFilename(self, *args):
-        return _LayoutScript.layout_getOpenFilename(self, *args)
+    def getOpenFilename(self, filter: str = "", path: str = "") -> str:
+        return _LayoutScript.layout_getOpenFilename(self, filter, path)
 
-    def getSaveFilename(self, *args):
-        return _LayoutScript.layout_getSaveFilename(self, *args)
+    def getSaveFilename(self, filter: str = "", path: str = "") -> str:
+        return _LayoutScript.layout_getSaveFilename(self, filter, path)
 
-    def getDirectory(self, *args):
-        return _LayoutScript.layout_getDirectory(self, *args)
+    def getDirectory(self, path: str = "") -> str:
+        return _LayoutScript.layout_getDirectory(self, path)
 
-    def getStatistic(self):
+    def getStatistic(self) -> str:
         return _LayoutScript.layout_getStatistic(self)
 
-    def getToolbarState(self):
+    def getToolbarState(self) -> str:
         return _LayoutScript.layout_getToolbarState(self)
 
-    def getVersion(self):
+    def getVersion(self) -> str:
         return _LayoutScript.layout_getVersion(self)
 
-    def hideToolBar(self, name):
+    def hideToolBar(self, name: str) -> None:
         return _LayoutScript.layout_hideToolBar(self, name)
 
-    def menuAdd(self, name, entries):
+    def menuAdd(self, name: str, entries: List[str]) -> None:
         return _LayoutScript.layout_menuAdd(self, name, entries)
 
-    netlistTool = property(
+    netlistTool: netListModule = property(
         _LayoutScript.layout_netlistTool_get, _LayoutScript.layout_netlistTool_set
     )
 
-    def open(self, fileName):
+    def open(self, fileName: str) -> None:
         return _LayoutScript.layout_open(self, fileName)
 
-    def _print(self):
+    def _print(self) -> None:
         return _LayoutScript.layout__print(self)
 
-    def resetShortcut(self, function):
+    def resetShortcut(self, function: int) -> bool:
         return _LayoutScript.layout_resetShortcut(self, function)
 
-    def save(self):
+    def save(self) -> None:
         return _LayoutScript.layout_save(self)
 
-    def saveAs(self):
+    def saveAs(self) -> None:
         return _LayoutScript.layout_saveAs(self)
 
-    def screenshot(self):
+    def screenshot(self) -> None:
         return _LayoutScript.layout_screenshot(self)
 
-    def setCell(self):
+    def setCell(self) -> None:
         return _LayoutScript.layout_setCell(self)
 
-    def setCellname(self):
+    def setCellname(self) -> None:
         return _LayoutScript.layout_setCellname(self)
 
-    def setMenuEnabled(self, name, b):
+    def setMenuEnabled(self, name: str, b: bool) -> None:
         return _LayoutScript.layout_setMenuEnabled(self, name, b)
 
-    def setToolbarEnabled(self, name, b):
+    def setToolbarEnabled(self, name: str, b: bool) -> None:
         return _LayoutScript.layout_setToolbarEnabled(self, name, b)
 
-    def setSnapToGrid(self, b):
+    def setSnapToGrid(self, b: bool) -> None:
         return _LayoutScript.layout_setSnapToGrid(self, b)
 
-    def setSnapToPoint(self, b):
+    def setSnapToPoint(self, b: bool) -> None:
         return _LayoutScript.layout_setSnapToPoint(self, b)
 
-    def setSnapToMiddle(self, b):
+    def setSnapToMiddle(self, b: bool) -> None:
         return _LayoutScript.layout_setSnapToMiddle(self, b)
 
-    def setSnapToLine(self, b):
+    def setSnapToLine(self, b: bool) -> None:
         return _LayoutScript.layout_setSnapToLine(self, b)
 
-    def setSnapToCenter(self, b):
+    def setSnapToCenter(self, b: bool) -> None:
         return _LayoutScript.layout_setSnapToCenter(self, b)
 
-    def setSnapToIntersection(self, b):
+    def setSnapToIntersection(self, b: bool) -> None:
         return _LayoutScript.layout_setSnapToIntersection(self, b)
 
-    def setToolbarState(self, arg2):
-        return _LayoutScript.layout_setToolbarState(self, arg2)
+    def setToolbarState(self, state: str) -> None:
+        return _LayoutScript.layout_setToolbarState(self, state)
 
-    def setShortcut(self, *args):
-        return _LayoutScript.layout_setShortcut(self, *args)
+    def setShortcut(self, function: Union[int, str], key: str) -> bool:
+        return _LayoutScript.layout_setShortcut(self, function, key)
 
-    def showMessage(self, caption, label):
+    def showMessage(self, caption: str, label: str) -> None:
         return _LayoutScript.layout_showMessage(self, caption, label)
 
-    def showStatus(self, lable):
-        return _LayoutScript.layout_showStatus(self, lable)
+    def showStatus(self, label: str) -> None:
+        return _LayoutScript.layout_showStatus(self, label)
 
-    def showToolBar(self, name):
+    def showToolBar(self, name: str) -> None:
         return _LayoutScript.layout_showToolBar(self, name)
 
-    def showTextEditor(self):
+    def showTextEditor(self) -> textEdit:
         return _LayoutScript.layout_showTextEditor(self)
 
-    def toolBarAdd(self, name, buttons):
+    def toolBarAdd(self, name: str, buttons: List[str]) -> None:
         return _LayoutScript.layout_toolBarAdd(self, name, buttons)
 
-    view3dTool = property(
+    view3dTool: view3dModule = property(
         _LayoutScript.layout_view3dTool_get, _LayoutScript.layout_view3dTool_set
     )
 
-    def setLayerSorting(self, arg2):
-        return _LayoutScript.layout_setLayerSorting(self, arg2)
+    def setLayerSorting(self, sort: int) -> None:
+        return _LayoutScript.layout_setLayerSorting(self, sort)
 
-    def getView(self):
-        return _LayoutScript.layout_getView(self)
-
-    def saveScreenshot(self, filename):
+    def saveScreenshot(self, filename: str) -> None:
         return _LayoutScript.layout_saveScreenshot(self, filename)
 
-    def group(self):
+    def group(self) -> None:
         return _LayoutScript.layout_group(self)
 
-    def deleteActuellCell(self):
+    def deleteActuellCell(self) -> None:
         return _LayoutScript.layout_deleteActuellCell(self)
 
-    def newCell(self):
+    def newCell(self) -> None:
         return _LayoutScript.layout_newCell(self)
 
-    def __init__(self):
+    def __init__(self) -> None:
         _LayoutScript.layout_swiginit(self, _LayoutScript.new_layout())
 
     __swig_destroy__ = _LayoutScript.delete_layout
@@ -3409,7 +3678,7 @@ class netList(object):
         raise AttributeError("No constructor defined")
 
     __repr__ = _swig_repr
-    cellname = property(
+    cellname: str = property(
         _LayoutScript.netList_cellname_get, _LayoutScript.netList_cellname_set
     )
 
@@ -3821,12 +4090,12 @@ class project(object):
     __repr__ = _swig_repr
 
     @staticmethod
-    def closeLayout(l):
-        return _LayoutScript.project_closeLayout(l)
+    def closeLayout(layout: layout) -> None:
+        return _LayoutScript.project_closeLayout(layout)
 
     @staticmethod
-    def closeLayout3d(l):
-        return _LayoutScript.project_closeLayout3d(l)
+    def closeLayout3d(layout3d: layout3d) -> None:
+        return _LayoutScript.project_closeLayout3d(layout3d)
 
     @staticmethod
     def closeSchematic(s):
@@ -3861,7 +4130,7 @@ class project(object):
         return _LayoutScript.project_hasSchematic(lay)
 
     @staticmethod
-    def newLayout():
+    def newLayout() -> layout:
         return _LayoutScript.project_newLayout()
 
     @staticmethod
@@ -4830,8 +5099,8 @@ class sheet(object):
     def getUnusedDevicename(self, prefix):
         return _LayoutScript.sheet_getUnusedDevicename(self, prefix)
 
-    def deleteElement(self, arg2):
-        return _LayoutScript.sheet_deleteElement(self, arg2)
+    def deleteElement(self, e: element) -> None:
+        return _LayoutScript.sheet_deleteElement(self, e)
 
     def getSheetComponent(self):
         return _LayoutScript.sheet_getSheetComponent(self)
@@ -5215,36 +5484,45 @@ class strans(object):
     )
     __repr__ = _swig_repr
 
-    def __init__(self, *args):
+    @overload
+    def __init__(self): ...
+
+    @overload
+    def __init__(self, trans: strans): ...
+
+    @overload
+    def __init__(self, transString: str): ...
+
+    def __init__(self, *args: Union[strans, str, None]):
         _LayoutScript.strans_swiginit(self, _LayoutScript.new_strans(*args))
 
     __swig_destroy__ = _LayoutScript.delete_strans
 
-    def clearMirror_x(self):
+    def clearMirror_x(self) -> None:
         return _LayoutScript.strans_clearMirror_x(self)
 
-    def getAngle(self):
+    def getAngle(self) -> float:
         return _LayoutScript.strans_getAngle(self)
 
-    def getMirror_x(self):
+    def getMirror_x(self) -> bool:
         return _LayoutScript.strans_getMirror_x(self)
 
-    def getScale(self):
+    def getScale(self) -> float:
         return _LayoutScript.strans_getScale(self)
 
-    def reset(self):
+    def reset(self) -> None:
         return _LayoutScript.strans_reset(self)
 
-    def rotate(self, angle):
+    def rotate(self, angle: float) -> None:
         return _LayoutScript.strans_rotate(self, angle)
 
-    def scale(self, d):
-        return _LayoutScript.strans_scale(self, d)
+    def scale(self, value: float) -> None:
+        return _LayoutScript.strans_scale(self, value)
 
-    def setMirror_x(self):
+    def setMirror_x(self) -> None:
         return _LayoutScript.strans_setMirror_x(self)
 
-    def toggleMirror_x(self):
+    def toggleMirror_x(self) -> None:
         return _LayoutScript.strans_toggleMirror_x(self)
 
 
