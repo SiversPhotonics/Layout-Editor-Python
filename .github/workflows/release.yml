@@ -13,9 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
       - name: Extract version from setup.py
         id: extract_version_linux
         run: |
@@ -23,17 +20,9 @@ jobs:
           version=$(echo "$content" | grep -Po '(?<=version=\")[^\"]+')
           echo "VERSION=$version" >> $GITHUB_ENV
 
-      - name: Build Docker image
+      - name: Build
         run: |
-          cd linux
-          docker build -t layout_editor_linux -f Dockerfile .
-          cd ..
-
-      - name: Run Docker container
-        run: |
-          docker run --name layout_editor_container layout_editor_linux
-          docker cp layout_editor_container:/usr/src/app/dist linux/dist
-          docker rm layout_editor_container
+          python setup.py sdist bdist_wheel
 
       - name: Create GitHub Release for Linux
         id: create_release_linux
@@ -44,7 +33,7 @@ jobs:
           body: |
             Release for commit ${{ github.sha }} (Linux).
           files: |
-            linux/dist/*.whl
+            dist/*.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -69,10 +58,8 @@ jobs:
           $version = $matches.Groups[1].Value
           echo "VERSION=$version" >> $env:GITHUB_ENV
 
-      - name: Install dependencies
+      - name: Build
         run: |
-          pip install wheel
-          cd windows
           python setup.py sdist bdist_wheel
 
       - name: Create GitHub Release for Windows
@@ -84,6 +71,6 @@ jobs:
           body: |
             Release for commit ${{ github.sha }} (Windows).
           files: |
-            windows/dist/*.whl
+            dist/*.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
