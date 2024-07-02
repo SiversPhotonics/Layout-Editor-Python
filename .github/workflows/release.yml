@@ -23,14 +23,12 @@ jobs:
       - name: Build
         run: |
           python setup.py sdist bdist_wheel
-          mkdir -p linux_output
-          cp dist/*.whl linux_output/
 
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v2
         with:
           name: linux-wheels
-          path: linux_output/
+          path: dist/
 
   build-windows:
     name: Build on Windows
@@ -53,15 +51,13 @@ jobs:
       - name: Build
         run: |
           python setup.py sdist bdist_wheel
-          mkdir -p windows_output
           Get-ChildItem -Path dist\*.whl | Rename-Item -NewName { $_.Name -replace '\any.whl$', 'win_amd64.whl' }
-          Copy-Item -Path dist\*.whl -Destination windows_output/
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v2
         with:
           name: windows-wheels
-          path: windows_output/
+          path: dist/
 
   release:
     name: Create GitHub Release
