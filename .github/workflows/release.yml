@@ -4,53 +4,43 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  build-linux:
-    name: Build on Linux
+  extract-version:
+    name: Extract Version
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract_version.outputs.version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
       - name: Extract version from setup.py
-        id: extract_version_linux
+        id: extract_version
         run: |
-          content=$(cat linux/setup.py)
+          content=$(cat setup.py)
           version=$(echo "$content" | grep -Po '(?<=version=\")[^\"]+')
-          echo "VERSION=$version" >> $GITHUB_ENV
+          echo "::set-output name=version::$version"
 
-      - name: Build Docker image
+  build-linux:
+    name: Build on Linux
+    runs-on: ubuntu-latest
+    needs: extract-version
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build
         run: |
-          cd linux
-          docker build -t layout_editor_linux -f Dockerfile .
-          cd ..
-
-      - name: Run Docker container
-        run: |
-          docker run --name layout_editor_container layout_editor_linux
-          docker cp layout_editor_container:/usr/src/app/dist linux/dist
-          docker rm layout_editor_container
-
-      - name: Create GitHub Release for Linux
-        id: create_release_linux
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: "v${{ env.VERSION }}-linux"
-          name: Release v${{ env.VERSION }} for Linux
-          body: |
-            Release for commit ${{ github.sha }} (Linux).
-          files: |
-            linux/dist/*.whl
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          python setup.py sdist bdist_wheel
+          for file in dist/*.whl; do mv "$file" "${file%.whl}-linux.whl"; done
+          cp dist/*-linux.whl ${{ github.workspace }}/dist/
 
   build-windows:
     name: Build on Windows
     runs-on: windows-latest
+    needs: extract-version
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -60,30 +50,30 @@ jobs:
         with:
           python-version: '3.7'
 
-      - name: Extract version from setup.py
-        id: extract_version_windows
-        shell: pwsh
+      - name: Build
         run: |
-          $content = Get-Content windows/setup.py -Raw
-          $matches = [regex]::Match($content, 'version="([^"]+)"')
-          $version = $matches.Groups[1].Value
-          echo "VERSION=$version" >> $env:GITHUB_ENV
-
-      - name: Install dependencies
-        run: |
-          pip install wheel
-          cd windows
           python setup.py sdist bdist_wheel
+          for file in dist/*.whl; do mv "$file" "${file%.whl}-windows.whl"; done
+          cp dist/*-windows.whl ${{ github.workspace }}/dist/
 
-      - name: Create GitHub Release for Windows
-        id: create_release_windows
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [build-linux, build-windows]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create GitHub Release
+        id: create_release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v${{ env.VERSION }}-windows"
-          name: Release v${{ env.VERSION }} for Windows
+          tag_name: "v${{ needs.extract-version.outputs.version }}"
+          name: Release v${{ needs.extract-version.outputs.version }}
           body: |
-            Release for commit ${{ github.sha }} (Windows).
+            Release for commit ${{ github.sha }}.
           files: |
-            windows/dist/*.whl
+            dist/*-linux.whl
+            dist/*-windows.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
