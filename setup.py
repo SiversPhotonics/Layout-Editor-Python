@@ -11,7 +11,7 @@ elif os.name == "nt":
 
 setup(
     name="layout_editor",
-    version="1.0.1",
+    version="1.0.2",
     include_package_data=True,
     packages=find_packages(),
     description="A layout editor package",

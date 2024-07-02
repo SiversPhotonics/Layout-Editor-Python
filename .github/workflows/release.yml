@@ -76,13 +76,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: linux-wheels
-          path: output/
+          path: output/linux
 
       - name: Download Windows artifacts
         uses: actions/download-artifact@v2
         with:
           name: windows-wheels
-          path: output/
+          path: output/windows
 
       - name: Extract version from setup.py
         id: extract_version
@@ -100,7 +100,7 @@ jobs:
           body: |
             Release for commit ${{ github.sha }}.
           files: |
-            output/linux_output/*-linux.whl
-            output/windows_output/*-windows.whl
+            output/linux/*.whl
+            output/windows/*.whl
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
