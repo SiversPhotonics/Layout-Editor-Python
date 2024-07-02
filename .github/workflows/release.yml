@@ -23,9 +23,8 @@ jobs:
       - name: Build
         run: |
           python setup.py sdist bdist_wheel
-          for file in dist/*.whl; do mv "$file" "${file%.whl}-linux.whl"; done
           mkdir -p linux_output
-          cp dist/*-linux.whl linux_output/
+          cp dist/*.whl linux_output/
 
       - name: Upload Linux artifacts
         uses: actions/upload-artifact@v2
@@ -55,8 +54,8 @@ jobs:
         run: |
           python setup.py sdist bdist_wheel
           mkdir -p windows_output
-          Get-ChildItem -Path dist\*.whl | Rename-Item -NewName { $_.Name -replace '\.whl$', '-windows.whl' }
-          Copy-Item -Path dist\*-windows.whl -Destination windows_output/
+          Get-ChildItem -Path dist\*.whl | Rename-Item -NewName { $_.Name -replace '\any.whl$', 'win_amd64.whl' }
+          Copy-Item -Path dist\*.whl -Destination windows_output/
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v2
