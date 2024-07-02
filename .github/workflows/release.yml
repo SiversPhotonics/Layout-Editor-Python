@@ -51,7 +51,10 @@ jobs:
       - name: Build
         run: |
           python setup.py sdist bdist_wheel
-          Get-ChildItem -Path dist\*.whl | Rename-Item -NewName { $_.Name -replace '\any.whl$', 'win_amd64.whl' }
+          Get-ChildItem -Path dist\*.whl | ForEach-Object {
+            $newName = $_.Name -replace 'any\.whl$', 'win_amd64.whl'
+            Rename-Item -Path $_.FullName -NewName $newName
+          }
 
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v2
