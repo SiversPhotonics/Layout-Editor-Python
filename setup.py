@@ -17,6 +17,5 @@ setup(
     description="A layout editor package",
     author="Matthew McKee",
     author_email="matthew.mckee@sivers-photonics.com",
-    install_requires=["numpy"],
-    package_data={"": ["*.pyd", "py.typed", "platforms/*"]},
+    package_data=package_data,
 )
